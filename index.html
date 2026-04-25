@@ -1,145 +1,661 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-	<meta name="generator" content="Hugo 0.152.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-        <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>He Yiyang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #050508;
+  --deep: #0a0a12;
+  --surface: #111118;
+  --card: #16161f;
+  --border: rgba(255,255,255,0.07);
+  --ink: #f0eee8;
+  --ink-2: rgba(240,238,232,0.6);
+  --ink-3: rgba(240,238,232,0.35);
+  /* Domain colours */
+  --urban: #34d399;
+  --energy: #fb923c;
+  --ai: #a78bfa;
+  --urban-dim: rgba(52,211,153,0.12);
+  --energy-dim: rgba(251,146,60,0.12);
+  --ai-dim: rgba(167,139,250,0.12);
+  /* Intersection colours */
+  --ue: #f59e0b;   /* urban+energy */
+  --ua: #60a5fa;   /* urban+ai */
+  --ea: #f472b6;   /* energy+ai */
+  --ue-dim: rgba(245,158,11,0.12);
+  --ua-dim: rgba(96,165,250,0.12);
+  --ea-dim: rgba(244,114,182,0.12);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Syne', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--void);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.6;overflow-x:hidden;cursor:none;}
 
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author" content="">
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<meta name="robots" content="noodp" />
-<meta name="theme-color" content="" />
-<link rel="canonical" href="//localhost:1313/" />
+/* ── CURSOR ── */
+.cursor{position:fixed;top:0;left:0;width:10px;height:10px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+.cursor-ring{position:fixed;top:0;left:0;width:36px;height:36px;border:1px solid rgba(240,238,232,0.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s;}
+body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:60px;height:60px;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;transition:background 0.4s;}
+nav.scrolled{background:rgba(5,5,8,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-name{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;color:var(--ink-3);text-transform:uppercase;}
+.nav-links{display:flex;gap:2.5rem;}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--ink);}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:7rem 3rem 5.5rem;position:relative;overflow:hidden;}
+.hero-canvas{position:absolute;inset:0;z-index:0;}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:0;animation:orbIn 2.5s ease forwards;}
+.orb-urban{width:550px;height:550px;background:var(--urban);top:-80px;left:-100px;animation-delay:0.3s;}
+.orb-energy{width:480px;height:480px;background:var(--energy);bottom:-60px;right:-80px;animation-delay:0.6s;}
+.orb-ai{width:400px;height:400px;background:var(--ai);top:40%;right:25%;animation-delay:0.9s;}
+@keyframes orbIn{0%{opacity:0;transform:scale(0.85);}100%{opacity:0.1;transform:scale(1);}}
+.hero-canvas::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 60%,transparent 40%,var(--void) 100%);pointer-events:none;}
+
+.hero-content{position:relative;z-index:1;}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:fadeUp 0.8s ease 0.3s forwards;}
+.hero-eyebrow span{display:inline-block;width:28px;height:1px;background:var(--ink-3);}
+
+h1.hero-title{font-family:var(--serif);font-size:clamp(3.2rem,7.5vw,7.8rem);font-weight:300;line-height:1.03;letter-spacing:-0.02em;max-width:950px;opacity:0;animation:fadeUp 1s ease 0.5s forwards;}
+h1.hero-title em{font-style:italic;}
+.grad-urban{background:linear-gradient(120deg,var(--urban),var(--ue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.grad-energy{background:linear-gradient(120deg,var(--ue),var(--energy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.grad-ai{background:linear-gradient(120deg,var(--ua),var(--ai));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+.hero-sub{max-width:580px;font-size:1rem;color:var(--ink-2);line-height:1.85;margin-top:2.25rem;opacity:0;animation:fadeUp 0.8s ease 0.85s forwards;}
+
+.hero-domains{display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s ease 1.1s forwards;}
+.domain-badge{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem 0.85rem;border-radius:999px;border:1px solid;}
+.db-urban{color:var(--urban);border-color:rgba(52,211,153,0.35);background:var(--urban-dim);}
+.db-energy{color:var(--energy);border-color:rgba(251,146,60,0.35);background:var(--energy-dim);}
+.db-ai{color:var(--ai);border-color:rgba(167,139,250,0.35);background:var(--ai-dim);}
+
+.scroll-hint{position:absolute;bottom:3rem;right:3rem;display:flex;flex-direction:column;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);opacity:0;animation:fadeIn 1s ease 1.6s forwards;}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,transparent,var(--ink-3));animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(0.8);}50%{opacity:1;transform:scaleY(1);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+/* ── OVERLAP ENGINE (sticky scroll) ── */
+#overlap-engine{min-height:600vh;position:relative;}
+.overlap-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+
+.overlap-scene{width:100%;max-width:1200px;margin:0 auto;padding:0 3rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+
+/* ── VENN DIAGRAM ── */
+.venn-container{position:relative;width:380px;height:380px;flex-shrink:0;}
+.vcircle{position:absolute;border-radius:50%;width:230px;height:230px;border:1px solid;transition:all 0.7s cubic-bezier(0.34,1.4,0.64,1);display:flex;align-items:flex-start;justify-content:center;padding-top:1.2rem;font-family:var(--mono);font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;mix-blend-mode:screen;}
+.vc-urban{border-color:var(--urban);color:var(--urban);background:rgba(52,211,153,0.07);top:0;left:75px;}
+.vc-energy{border-color:var(--energy);color:var(--energy);background:rgba(251,146,60,0.07);bottom:0;left:0;}
+.vc-ai{border-color:var(--ai);color:var(--ai);background:rgba(167,139,250,0.07);bottom:0;right:0;}
+
+/* intersection zone labels */
+.venn-zone{position:absolute;font-family:var(--mono);font-size:8.5px;letter-spacing:0.07em;text-transform:uppercase;text-align:center;line-height:1.4;transition:all 0.5s ease;opacity:0.4;pointer-events:none;}
+.vz-ue{top:62%;left:22%;color:var(--ue);}
+.vz-ua{top:28%;left:50%;transform:translateX(-50%);color:var(--ua);}
+.vz-ea{top:62%;right:18%;color:var(--ea);}
+.vz-center{top:50%;left:50%;transform:translate(-50%,-50%);color:var(--ink-2);font-size:8px;}
+
+.venn-zone.lit{opacity:1;}
+/* glow blobs for active intersections */
+.vblob{position:absolute;border-radius:50%;filter:blur(28px);opacity:0;transition:opacity 0.6s ease;pointer-events:none;}
+.vb-ue{width:90px;height:90px;background:var(--ue);top:57%;left:14%;}
+.vb-ua{width:90px;height:90px;background:var(--ua);top:16%;left:40%;}
+.vb-ea{width:90px;height:90px;background:var(--ea);top:57%;right:10%;}
+.vb-center{width:60px;height:60px;background:white;top:46%;left:43%;}
+.vblob.lit{opacity:0.18;}
+
+/* ── TEXT PANEL ── */
+.overlap-text-wrap{position:relative;min-height:420px;}
+.overlap-phase{position:absolute;inset:0;opacity:0;transform:translateY(18px);transition:opacity 0.5s ease,transform 0.5s ease;pointer-events:none;}
+.overlap-phase.active{opacity:1;transform:translateY(0);pointer-events:auto;position:relative;}
+
+.op-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;}
+.op-eyebrow::before{content:'';display:inline-block;width:18px;height:1px;}
+.op-h2{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.9rem);font-weight:300;line-height:1.15;margin-bottom:1.1rem;}
+.op-p{font-size:0.92rem;color:var(--ink-2);line-height:1.85;max-width:430px;}
+.op-works{margin-top:1.5rem;display:flex;flex-direction:column;gap:0.6rem;}
+.op-work-item{font-size:0.825rem;color:var(--ink-3);line-height:1.65;padding-left:1.1rem;position:relative;transition:color 0.2s;}
+.op-work-item::before{content:'↗';position:absolute;left:0;font-size:0.75rem;}
+.op-work-item:hover{color:var(--ink-2);}
+.op-work-item a{color:inherit;text-decoration:none;}
+.op-work-item strong{font-weight:400;color:var(--ink-2);}
+
+/* Phase colour theming */
+.phase-intro .op-eyebrow{color:var(--ink-3);}
+.phase-intro .op-eyebrow::before{background:var(--ink-3);}
+.phase-ue .op-eyebrow{color:var(--ue);}
+.phase-ue .op-eyebrow::before{background:var(--ue);}
+.phase-ua .op-eyebrow{color:var(--ua);}
+.phase-ua .op-eyebrow::before{background:var(--ua);}
+.phase-ea .op-eyebrow{color:var(--ea);}
+.phase-ea .op-eyebrow::before{background:var(--ea);}
+.phase-all .op-eyebrow{color:var(--ink-2);}
+.phase-all .op-eyebrow::before{background:var(--ink-2);}
+
+/* ── FULL PUBLICATIONS ── */
+#publications{padding:8rem 3rem;position:relative;}
+#publications::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);}
+
+.sec-label{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3.5rem;display:flex;align-items:center;gap:0.75rem;}
+.sec-label::before{content:'';width:20px;height:1px;background:var(--ink-3);display:inline-block;}
+
+.pub-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.pub-col-header{padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
+.pub-col-body{padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:1.5rem;}
+.pub-col-urban .pub-col-header{color:var(--urban);}
+.pub-col-ue .pub-col-header{color:var(--ue);}
+.pub-col-ai .pub-col-header{color:var(--ai);}
+
+.pub-entry{padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+.pub-entry:last-child{border-bottom:none;padding-bottom:0;}
+.pub-status{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;display:inline-block;padding:0.2rem 0.55rem;border-radius:2px;border:1px solid;}
+.status-pub{color:var(--urban);border-color:rgba(52,211,153,0.3);background:var(--urban-dim);}
+.status-wip{color:var(--ue);border-color:rgba(245,158,11,0.3);background:var(--ue-dim);}
+.status-chapter{color:var(--ai);border-color:rgba(167,139,250,0.3);background:var(--ai-dim);}
+.status-ra{color:var(--ink-3);border-color:rgba(240,238,232,0.1);background:rgba(240,238,232,0.03);}
+.status-conf{color:var(--ua);border-color:rgba(96,165,250,0.3);background:var(--ua-dim);}
+.pub-title{font-family:var(--serif);font-size:1.05rem;font-style:italic;font-weight:300;line-height:1.35;margin-bottom:0.5rem;color:var(--ink);}
+.pub-title a{color:inherit;text-decoration:none;}
+.pub-title a:hover{text-decoration:underline;text-underline-offset:3px;}
+.pub-collab{font-size:0.8rem;color:var(--ink-3);line-height:1.65;}
+.pub-collab strong{color:var(--ink-2);font-weight:400;}
+
+/* ── TIMELINE ── */
+#timeline{padding:7rem 3rem;border-top:1px solid var(--border);}
+.tl-track{display:flex;flex-direction:column;position:relative;margin-top:3rem;}
+.tl-track::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--border) 5%,var(--border) 95%,transparent);}
+.tl-item{display:grid;grid-template-columns:200px 1fr;gap:3rem;padding:2.25rem 0 2.25rem 3rem;border-bottom:1px solid var(--border);position:relative;opacity:0;transform:translateX(-18px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.tl-item.visible{opacity:1;transform:translateX(0);}
+.tl-item::before{content:'';position:absolute;left:-4px;top:2.8rem;width:8px;height:8px;border-radius:50%;border:1px solid var(--border);background:var(--void);transition:background 0.3s,border-color 0.3s;}
+.tl-item:hover::before{background:var(--ink);border-color:var(--ink);}
+.tl-date{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:0.5rem;line-height:1.5;}
+.tl-type{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.55rem;border-radius:2px;border:1px solid;}
+.type-intern{color:var(--energy);border-color:rgba(251,146,60,0.3);background:var(--energy-dim);}
+.type-teaching{color:var(--ua);border-color:rgba(96,165,250,0.3);background:var(--ua-dim);}
+.type-lead{color:var(--urban);border-color:rgba(52,211,153,0.3);background:var(--urban-dim);}
+.tl-org{font-size:0.8rem;color:var(--ink-3);margin-top:0.5rem;line-height:1.5;}
+.tl-right h3{font-family:var(--serif);font-size:1.45rem;font-weight:300;line-height:1.2;margin-bottom:0.75rem;}
+.tl-right ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-top:0.5rem;}
+.tl-right ul li{font-size:0.875rem;color:var(--ink-2);line-height:1.75;padding-left:1.25rem;position:relative;}
+.tl-right ul li::before{content:'→';position:absolute;left:0;color:var(--ink-3);font-size:0.8rem;}
+
+/* ── EDUCATION ── */
+#education{padding:7rem 3rem;border-top:1px solid var(--border);}
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem;margin-top:3rem;}
+.edu-card{background:var(--card);border:1px solid var(--border);padding:2.5rem;position:relative;overflow:hidden;opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease,border-color 0.3s;}
+.edu-card.visible{opacity:1;transform:translateY(0);}
+.edu-card:hover{border-color:rgba(255,255,255,0.14);}
+.edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.edu-card:nth-child(1)::before{background:linear-gradient(to right,var(--urban),var(--ua));}
+.edu-card:nth-child(2)::before{background:linear-gradient(to right,var(--ai),var(--ea));}
+.edu-school-name{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:0.85rem;}
+.edu-date{font-family:var(--mono);font-size:10px;color:var(--ink-3);margin-bottom:1rem;}
+.edu-degree{font-family:var(--serif);font-size:1.45rem;font-weight:300;line-height:1.25;margin-bottom:0.75rem;}
+.edu-detail{font-size:0.875rem;color:var(--ink-2);line-height:1.7;}
+.award-chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1.1rem;}
+.award-chip{font-family:var(--mono);font-size:9px;letter-spacing:0.07em;padding:0.25rem 0.6rem;border:1px solid rgba(167,139,250,0.25);color:var(--ai);background:var(--ai-dim);border-radius:2px;}
+.gpa-ghost{position:absolute;bottom:1.5rem;right:1.75rem;font-family:var(--serif);font-size:3.2rem;font-weight:300;color:rgba(240,238,232,0.04);line-height:1;pointer-events:none;}
+
+/* ── CONTACT ── */
+#contact{padding:8rem 3rem 6rem;position:relative;overflow:hidden;}
+.contact-bg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 85% 40%,rgba(167,139,250,0.05) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 15% 70%,rgba(52,211,153,0.04) 0%,transparent 70%);pointer-events:none;}
+.contact-title{font-family:var(--serif);font-size:clamp(3rem,7vw,7.5rem);font-weight:300;line-height:1.04;margin-bottom:3rem;max-width:750px;}
+.contact-title em{font-style:italic;background:linear-gradient(135deg,var(--energy),var(--ai));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.contact-links-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:5rem;}
+.contact-pill{display:inline-flex;align-items:center;gap:0.6rem;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;color:var(--ink-2);border:1px solid var(--border);padding:0.75rem 1.5rem;border-radius:999px;transition:all 0.25s;}
+.contact-pill:hover{background:var(--card);border-color:rgba(255,255,255,0.15);color:var(--ink);}
+.dot-u{width:6px;height:6px;border-radius:50%;background:var(--urban);flex-shrink:0;}
+.dot-e{width:6px;height:6px;border-radius:50%;background:var(--energy);flex-shrink:0;}
+.dot-a{width:6px;height:6px;border-radius:50%;background:var(--ai);flex-shrink:0;}
 
 
-    <title>
-        
-            welcome to yiyang&#39;s corner! 
-        
-    </title>
+footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;letter-spacing:0.08em;color:var(--ink-3);}
 
+/* ── UTILS ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
 
+@media(max-width:800px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{gap:1.5rem;}
+  #hero{padding:0 1.5rem 4rem;}
+  .overlap-scene{grid-template-columns:1fr;padding:0 1.5rem;gap:2rem;}
+  .venn-container{width:280px;height:280px;margin:0 auto;}
+  .vcircle{width:170px;height:170px;}
+  .vc-urban{top:0;left:55px;}
+  #publications,.tl-item,#education,#contact{padding:5rem 1.5rem;}
+  .tl-item{grid-template-columns:1fr;gap:0.75rem;padding-left:2rem;}
+  footer{flex-direction:column;gap:0.5rem;text-align:center;}
+  .cursor,.cursor-ring{display:none;}
+  body{cursor:auto;}
+}
+</style>
+</head>
+<body>
 
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-
-  <link rel="stylesheet" href="/main.min.2729760c629597024c5de34b40ea9f372f2b5a2a192dcdca537b7ddfa483eab8.css" integrity="sha256-Jyl2DGKVlwJMXeNLQOqfNy8rWioZLc3KU3t936SD6rg=" crossorigin="anonymous">
-
-
-
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <meta name="msapplication-TileColor" content="">
-
-
-
-  <meta itemprop="name" content="welcome to yiyang&#39;s corner!">
-  <meta itemprop="description" content="Research on technology, population health, and urban futures.">
-  <meta itemprop="datePublished" content="2025-10-31T11:52:33+08:00">
-  <meta itemprop="dateModified" content="2025-10-31T11:52:33+08:00">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="welcome to yiyang&#39;s corner!">
-  <meta name="twitter:description" content="Research on technology, population health, and urban futures.">
-
-
-
-
-
-
-
-
-
-<link rel="alternate" type="application/rss+xml" href="//localhost:1313/index.xml" title="welcome to yiyang's corner!" />
-
-
-
-
-
-
-
-
-
-    </head>
-
-    
-    <body class="">
-
-    
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="//localhost:1313/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__mark">&gt;</span>
-            <span class="logo__text ">
-                yiyang</span>
-            <span class="logo__cursor" style=
-                  "
-                   
-                   ">
-            </span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="/about/">About</a></li><li><a href="/research/">Research</a></li><li><a href="/posts/">Blog</a></li><li><a href="/cv/">CV</a></li><li><a href="/contact/">Contact</a></li>
-    </ul>
+<!-- NAV -->
+<nav id="nav">
+  <span class="nav-name">He Yiyang 何一阳</span>
+  <div class="nav-links">
+    <a href="#overlap-engine">Research</a>
+    <a href="#publications">Publications</a>
+    <a href="#timeline">Work</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
 </nav>
 
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-        </span>
-    </span>
-</header>
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-canvas" aria-hidden="true">
+    <div class="hero-orb orb-urban"></div>
+    <div class="hero-orb orb-energy"></div>
+    <div class="hero-orb orb-ai"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow"><span></span>NUS · UPenn · Singapore</p>
+    <h1 class="hero-title">
+      <em class="grad-urban">Cities. Energy.</em><br>
+      <em class="grad-ai">Technology.</em><br>
+      And who bears the cost.
+    </h1>
+    <p class="hero-sub">I examine how political–economic institutions shape urban change through emerging technologies — and the transformations they drive in work, education, and healthcare. My research traces the environmental and social consequences of these shifts, including urban climate (in)justice and energy-intensive infrastructures.</p>
+    <div class="hero-domains">
+      <span class="domain-badge db-urban">Urban Development</span>
+      <span class="domain-badge db-energy">Energy &amp; Climate</span>
+      <span class="domain-badge db-ai">AI &amp; Labour</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
 
+<!-- ── OVERLAP ENGINE ── -->
+<section id="overlap-engine">
+  <div class="overlap-sticky" id="intSticky">
+    <div class="overlap-scene">
 
-            <div class="content">
-                
-    <main>
-        <div>
-            
+      <!-- Venn -->
+      <div class="venn-container">
+        <div class="vcircle vc-urban" id="vc-urban">Urban &amp;<br>Grassroots</div>
+        <div class="vcircle vc-energy" id="vc-energy">Energy &amp;<br>Climate</div>
+        <div class="vcircle vc-ai" id="vc-ai">AI &amp;<br>Labour</div>
 
-            <h1>welcome to yiyang&#39;s corner!</h1>
+        <!-- glow blobs -->
+        <div class="vblob vb-ue" id="vb-ue"></div>
+        <div class="vblob vb-ua" id="vb-ua"></div>
+        <div class="vblob vb-ea" id="vb-ea"></div>
+        <div class="vblob vb-center" id="vb-center"></div>
 
-            
+        <!-- zone labels -->
+        <div class="venn-zone vz-ue" id="vz-ue">Climate<br>Justice</div>
+        <div class="venn-zone vz-ua" id="vz-ua">Tech &amp;<br>Place</div>
+        <div class="venn-zone vz-ea" id="vz-ea">Future<br>of Work</div>
+        <div class="venn-zone vz-center" id="vz-center">Institutions<br>&amp; Equity</div>
+      </div>
+
+      <!-- Text -->
+      <div class="overlap-text-wrap">
+
+        <!-- Phase 0: intro -->
+        <div class="overlap-phase phase-intro active" id="phase-0">
+          <div class="op-eyebrow">Research</div>
+          <h2 class="op-h2">Most of my work<br>lives in the<br>overlaps.</h2>
+          <p class="op-p">Urban development, energy and climate justice, AI and labour — these aren't separate fields to me. Scroll to see where my projects sit at their intersections.</p>
         </div>
-    </main>
 
-            </div>
+        <!-- Phase 1: Urban alone -->
+        <div class="overlap-phase phase-urban" id="phase-1">
+          <div class="op-eyebrow" style="color:var(--urban);">Urban &amp; Grassroots</div>
+          <h2 class="op-h2">How cities are<br>made — and<br>by whom.</h2>
+          <p class="op-p">Urban development is never just technocratic planning. It is shaped by political institutions, grassroots movements, and the social histories embedded in place. I examine how these forces interact in contexts from Singapore's planned towns to caste and social inequality in global cities.</p>
+          <div class="op-works">
+            <div class="op-work-item"><strong>Urban Grassroots in the Making of Jurong Town</strong> — article in progress with A/P Daniel P. S. Goh (NUS)</div>
+            <div class="op-work-item"><strong>Global Caste Lab</strong> — researcher &amp; digital manager with Asst Prof Suraj Milind Yengde (University of Pennsylvania)</div>
+          </div>
+        </div>
 
-            
-                <footer class="footer">
-    
-    
+        <!-- Phase 2: UE intersection -->
+        <div class="overlap-phase phase-ue" id="phase-2">
+          <div class="op-eyebrow" style="color:var(--ue);">Urban × Energy — Climate Justice</div>
+          <h2 class="op-h2">Who pays for<br>the energy<br>transition?</h2>
+          <p class="op-p">Urban space and energy systems are deeply entangled. Climate transitions reshape neighbourhoods, school districts, and regional economies — often concentrating new risks on communities already underserved. I study both the politics of this unevenness and the institutional designs that could change it.</p>
+          <div class="op-works">
+            <div class="op-work-item"><strong>Climate Justice in K–12 School District Sustainability Planning</strong> — article in progress with Asst Prof Akira Drake Rodriguez (University of Pennsylvania)</div>
+            <div class="op-work-item"><strong>Just and Inclusive Energy Transitions in South and Southeast Asia</strong> — article in progress with Prof Petra Tschakert (NUS)</div>
+          </div>
+        </div>
+
+        <!-- Phase 3: UA intersection -->
+        <div class="overlap-phase phase-ua" id="phase-3">
+          <div class="op-eyebrow" style="color:var(--ua);">Urban × AI — Infrastructure &amp; Place</div>
+          <h2 class="op-h2">AI infrastructure<br>is urban<br>infrastructure.</h2>
+          <p class="op-p">Data centres, cloud systems, and AI pipelines are physical — they consume land, water, and power, and they are governed by policy choices that have real spatial consequences. I examine how US data centre policy shapes cities and communities.</p>
+          <div class="op-works">
+            <div class="op-work-item"><strong>US Data Center Policy</strong> — article in progress with Dr Vasundhara Kaul, Simon An, Asst Prof Daniel S. Schiff (Purdue)</div>
+          </div>
+        </div>
+
+        <!-- Phase 4: AI, Education & Future of Work -->
+        <div class="overlap-phase phase-ea" id="phase-4">
+          <div class="op-eyebrow" style="color:var(--ea);">AI, Education &amp; the Future of Work</div>
+          <h2 class="op-h2">How AI is<br>reshaping who<br>works, and how.</h2>
+          <p class="op-p">AI is restructuring labour markets, classrooms, and professional life — but its effects aren't neutral. I study how workers navigate precarity, how AI will reshape workforces, and how educational institutions can be redesigned to serve learners on their own terms.</p>
+          <div class="op-works">
+            <div class="op-work-item"><strong>"It's Messy…But I Feel Balanced"</strong> — published, CHI '26, with Daniel Campos Muñiz, Tse Pei Ng, Asst Prof Janghee Cho, A/P Jung-Joo Lee, Ker Wey Aw</div>
+            <div class="op-work-item"><strong>Predicting the Impacts of AI on Workers: A Systematic Literature Review</strong> — in progress with Asst Prof Luísa Nazareno (VCU), Asst Prof Daniel Schiff (Purdue), Asst Prof Zeewan Lee (LKY SPP)</div>
+            <div class="op-work-item"><strong>A Socio-Ethical Research Agenda for AI and the Future of Work</strong> — book chapter in progress with Luísa Nazareno, Vasundhara Kaul et al.</div>
+            <div class="op-work-item"><strong>Intentional Design: GenAI Integration Through the Human-AI Matrix</strong> — conference paper, HECS 2025, with Dr Verily Tan, Dr Mei Hui Liu, Dr Chun Liang Terrence Tan, A/P Yuen Jien Soo (NUS)</div>
+          </div>
+        </div>
+
+        <!-- Phase 5: placeholder kept for scroll math but empty -->
+        <div class="overlap-phase phase-all" id="phase-5" style="display:none;"></div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FULL PUBLICATIONS ── -->
+<section id="publications">
+  <div class="sec-label">All Research &amp; Publications</div>
+  <div class="pub-columns reveal">
+
+    <!-- Urban & Grassroots -->
+    <div class="pub-col pub-col-urban" style="background:var(--void);">
+      <div class="pub-col-header">Urban &amp; Grassroots</div>
+      <div class="pub-col-body">
+        <div class="pub-entry">
+          <span class="pub-status status-wip">In Progress</span>
+          <div class="pub-title">Urban Grassroots in the Making of Jurong Town</div>
+          <div class="pub-collab">With A/P Daniel P. S. Goh (NUS)</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-ra">RA &amp; Digital Manager</span>
+          <div class="pub-title">Global Caste Lab</div>
+          <div class="pub-collab">Researcher &amp; digital manager with Asst Prof Suraj Milind Yengde (University of Pennsylvania)</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-ra">Research Assistant</span>
+          <div class="pub-title">Family-Friendly Workplace Practices and Fertility Intentions in Singapore</div>
+          <div class="pub-collab">Research collaboration with the Prime Minister's Office, National Talent and Population Division, led by A/P Senhu Wang (NUS)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Urban × Energy -->
+    <div class="pub-col pub-col-ue" style="background:var(--void);">
+      <div class="pub-col-header" style="color:var(--ue);">Urban × Energy &amp; Climate</div>
+      <div class="pub-col-body">
+        <div class="pub-entry">
+          <span class="pub-status status-wip">In Progress</span>
+          <div class="pub-title">Climate Justice in K–12 School District Sustainability Planning: Durability, Equity, and Institutional Change</div>
+          <div class="pub-collab">With Asst Prof Akira Drake Rodriguez (University of Pennsylvania)</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-wip">In Progress</span>
+          <div class="pub-title">Just and Inclusive Energy Transitions in South and Southeast Asia</div>
+          <div class="pub-collab">With Prof Petra Tschakert (NUS)</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-wip">In Progress</span>
+          <div class="pub-title">US Data Center Policy</div>
+          <div class="pub-collab">With Dr Vasundhara Kaul, Simon An, Asst Prof Daniel S. Schiff (Purdue)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI & Labour -->
+    <div class="pub-col pub-col-ai" style="background:var(--void);">
+      <div class="pub-col-header">AI &amp; Labour / Education</div>
+      <div class="pub-col-body">
+        <div class="pub-entry">
+          <span class="pub-status status-pub">Published · CHI '26</span>
+          <div class="pub-title"><a href="https://doi.org/10.1145/3772318.3790825" target="_blank">"It's Messy…But I Feel Balanced": Unpacking Flexible Workers' Rhythm-Making Practices Using an Asset-Based Approach</a></div>
+          <div class="pub-collab">With <strong>Daniel Campos Muñiz, Tse Pei Ng</strong>, Asst Prof Janghee Cho, A/P Jung-Joo Lee, Ker Wey Aw · Article No. 232, pp. 1–20</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-wip">In Progress</span>
+          <div class="pub-title">Predicting the Impacts of AI on Workers: A Systematic Literature Review</div>
+          <div class="pub-collab">Journal article &amp; book chapter · With Asst Prof Luísa Nazareno (VCU), Asst Prof Daniel S. Schiff (Purdue), Asst Prof Zeewan Lee (LKY SPP)</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-chapter">Book Chapter · In Progress</span>
+          <div class="pub-title">A Socio-Ethical Research Agenda for AI and the Future of Work</div>
+          <div class="pub-collab">Luísa Nazareno, Vasundhara Kaul, Shiva Shakouri, Ashley Ko, <strong>Yiyang He</strong>, Keira Lavelle, Hardik Amin, Lucas Wiese, Daniel S. Schiff</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-conf">Conference · HECS 2025</span>
+          <div class="pub-title"><a href="https://ctlt.nus.edu.sg/hecs-2025/abstracts/hecs-2025-pp-soo-et-al/" target="_blank">Intentional Design: GenAI Integration Through the Human–AI Matrix</a></div>
+          <div class="pub-collab">Paper presentation, Higher Education Conference in Singapore, 10 Dec 2025 · A/P Yuen Jien Soo, Dr Verily Tan, Dr Chun Liang Terrence Tan, Dr Mei Hui Liu, <strong>Yiyang He</strong> (NUS)</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-ra">Research Assistant</span>
+          <div class="pub-title">Supporting Classroom Inquiry and Professional Development Evaluation at NUS</div>
+          <div class="pub-collab">Centre for Teaching, Learning and Technology, led by Dr Kiruthika Ragupathi</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-ra">Research Assistant</span>
+          <div class="pub-title">The University Disrupted: Higher Education in the Age of Artificial Intelligence</div>
+          <div class="pub-collab">Book project with Prof Simon Chesterman and A/P Loy Hui-Chieh (NUS)</div>
+        </div>
+        <div class="pub-entry">
+          <span class="pub-status status-ra">Research Assistant</span>
+          <div class="pub-title">The Overwork Machine: How Managers Normalise Endless Work in China's Technology Industry</div>
+          <div class="pub-collab">Book project with A/P Senhu Wang (NUS)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section id="timeline">
+  <div class="sec-label">Experience</div>
+  <div class="tl-track">
+
+    <div class="tl-item">
+      <div>
+        <div class="tl-date">Jul – Dec 2025</div>
+        <span class="tl-type type-intern">Internship</span>
+        <div class="tl-org">Health Promotion Board<br>Ministry of Health, Singapore</div>
+      </div>
+      <div class="tl-right">
+        <h3>Intern, Strategic Planning &amp; Collaborations</h3>
+        <ul>
+          <li>Contributed to national, cross-agency frameworks integrating urban planning, behavioural insights, and health promotion aligned with HPB's Five-Year Strategic Plan.</li>
+          <li>Conducted spatial and community analyses on barriers to healthy living among lower-income and ethnic minority groups, informing place-based interventions.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div>
+        <div class="tl-date">Mar – Jul 2025</div>
+        <span class="tl-type type-teaching">Teaching</span>
+        <div class="tl-org">NUS College<br>National University of Singapore</div>
+      </div>
+      <div class="tl-right">
+        <h3>Teaching Assistant</h3>
+        <ul>
+          <li>Supported NEX3009 Global Experience (Beijing) through site visits and field-based instruction, guiding students' understanding of how technology shapes business ecosystems within political and social contexts.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div>
+        <div class="tl-date">Aug 2024 – Aug 2025</div>
+        <span class="tl-type type-lead">Leadership</span>
+        <div class="tl-org">NUS College Club<br>NUS Students' Union</div>
+      </div>
+      <div class="tl-right">
+        <h3>President, NUS College Club</h3>
+        <ul>
+          <li>Led college-wide initiatives strengthening academic support, mental health advocacy, and campus belonging — coordinating across students, faculty, and administrators for over 1,500 peers.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div>
+        <div class="tl-date">Aug 2023 – Aug 2024</div>
+        <span class="tl-type type-lead">Leadership</span>
+        <div class="tl-org">NUS College Club<br>NUS Students' Union</div>
+      </div>
+      <div class="tl-right">
+        <h3>Onboarding &amp; Welcome Director</h3>
+        <ul>
+          <li>Designed and directed onboarding programmes helping incoming students build community, navigate academic life, and develop a sense of belonging from day one.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="sec-label">Education</div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-school-name">National University of Singapore</div>
+      <div class="edu-date">Expected May 2027 · Singapore</div>
+      <div class="edu-degree">B.Soc.Sci., Sociology (Hons)<br>Political Science Minor · NUS College</div>
+      <div class="edu-detail">GPA: 4.93 / 5.00</div>
+      <div class="award-chips">
+        <span class="award-chip">NUS College International Scholarship 2023–27</span>
+        <span class="award-chip">Dean's Scholars List — Top 1%, 2024/25</span>
+      </div>
+      <div class="gpa-ghost">4.93</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-school-name">University of Pennsylvania</div>
+      <div class="edu-date">Jan – May 2026 · Philadelphia, USA</div>
+      <div class="edu-degree">Visiting Student</div>
+      <div class="edu-detail">School of Arts &amp; Sciences · The Wharton School · Stuart Weitzman School of Design</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-bg" aria-hidden="true"></div>
+  <div class="reveal">
+    <div class="sec-label">Contact</div>
+    <h2 class="contact-title">Let's think<br>together.</h2>
+    <div class="contact-links-row">
+      <a class="contact-pill" href="mailto:heyiyang@u.nus.edu">
+        <span class="dot-a"></span> yiyanghe@u.nus.edu
+      </a>
+      <a class="contact-pill" href="https://www.linkedin.com/in/he-yiyang/" target="_blank">
+        <span class="dot-u"></span> LinkedIn
+      </a>
+      <a class="contact-pill" href="#" target="_blank">
+        <span class="dot-e"></span> Google Scholar
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <span>© 2026 He Yiyang</span>
+  <span>NUS · UPenn · Singapore</span>
 </footer>
 
-            
-        </div>
+<script>
+/* CURSOR */
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function animCursor(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animCursor);})();
 
-        
+/* NAV */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
 
+/* OVERLAP ENGINE */
+const phases=[
+  { id:'phase-0', blobs:[], zones:[] },
+  { id:'phase-1', blobs:[], zones:[] },
+  { id:'phase-2', blobs:['vb-ue'], zones:['vz-ue'] },
+  { id:'phase-3', blobs:['vb-ua'], zones:['vz-ua'] },
+  { id:'phase-4', blobs:['vb-ea'], zones:['vz-ea'] },
+  { id:'phase-5', blobs:['vb-ue','vb-ua','vb-ea','vb-center'], zones:['vz-ue','vz-ua','vz-ea','vz-center'] },
+];
 
+const allBlobs=['vb-ue','vb-ua','vb-ea','vb-center'];
+const allZones=['vz-ue','vz-ua','vz-ea','vz-center'];
+const allCircles=['vc-urban','vc-energy','vc-ai'];
 
-<script type="text/javascript" src="/bundle.min.ad54ad97364f77ede35def9096b162bb1f0b3973aa50b080f5e82fa147f6882e2a7200d7535adbf9b51bebf939f1c1ca9bbe6be87530092aca720eac4a226fda.js" integrity="sha512-rVStlzZPd&#43;3jXe&#43;QlrFiux8LOXOqULCA9egvoUf2iC4qcgDXU1rb&#43;bUb6/k58cHKm75r6HUwCSrKcg6sSiJv2g=="></script>
+let currentPhase=-1;
+function setPhase(idx){
+  if(idx===currentPhase)return;
+  currentPhase=idx;
+  const p=phases[idx];
+  // phases
+  phases.forEach((ph,i)=>{
+    const el=document.getElementById(ph.id);
+    if(el)el.classList.toggle('active',i===idx);
+  });
+  // blobs
+  allBlobs.forEach(b=>{
+    const el=document.getElementById(b);
+    if(el)el.classList.toggle('lit',p.blobs.includes(b));
+  });
+  // zones
+  allZones.forEach(z=>{
+    const el=document.getElementById(z);
+    if(el)el.classList.toggle('lit',p.zones.includes(z));
+  });
+  // circles: dim non-active on specific phases
+  allCircles.forEach(c=>{
+    const el=document.getElementById(c);
+    if(!el)return;
+    if(idx===1){el.style.opacity=c==='vc-urban'?'1':'0.25';}
+    else if(idx===2){el.style.opacity=(c==='vc-urban'||c==='vc-energy')?'0.8':'0.25';}
+    else if(idx===3){el.style.opacity=(c==='vc-urban'||c==='vc-ai')?'0.8':'0.25';}
+    else if(idx===4){el.style.opacity=(c==='vc-energy'||c==='vc-ai')?'0.8':'0.25';}
+    else{el.style.opacity='1';}
+  });
+}
+setPhase(0);
 
+const overlapSec=document.getElementById('overlap-engine');
+window.addEventListener('scroll',()=>{
+  const rect=overlapSec.getBoundingClientRect();
+  const total=overlapSec.offsetHeight-window.innerHeight;
+  const scrolled=-rect.top;
+  if(scrolled<0||scrolled>total)return;
+  const idx=Math.min(4,Math.floor((scrolled/total)*5));
+  setPhase(idx);
+},{passive:true});
 
-
-
-    </body>
+/* SCROLL REVEAL */
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+}),{threshold:0.08});
+document.querySelectorAll('.reveal,.tl-item,.edu-card').forEach((el,i)=>{
+  el.style.transitionDelay=(i%4)*0.09+'s';
+  io.observe(el);
+});
+</script>
+</body>
 </html>
