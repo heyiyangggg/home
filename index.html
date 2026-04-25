@@ -46,7 +46,7 @@ body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:60px;he
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;transition:background 0.4s;}
 nav.scrolled{background:rgba(5,5,8,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.nav-name{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;color:var(--ink-3);text-transform:uppercase;}
+.nav-name{font-family:var(--mono);font-size:12px;letter-spacing:0.14em;color:var(--ink);text-transform:uppercase;font-weight:500;}
 .nav-links{display:flex;gap:2.5rem;}
 .nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;transition:color 0.2s;}
 .nav-links a:hover{color:var(--ink);}
@@ -93,25 +93,32 @@ h1.hero-title em{font-style:italic;}
 
 /* ── VENN DIAGRAM ── */
 .venn-container{position:relative;width:380px;height:380px;flex-shrink:0;}
-.vcircle{position:absolute;border-radius:50%;width:230px;height:230px;border:1px solid;transition:all 0.7s cubic-bezier(0.34,1.4,0.64,1);display:flex;align-items:flex-start;justify-content:center;padding-top:1.2rem;font-family:var(--mono);font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;mix-blend-mode:screen;}
-.vc-urban{border-color:var(--urban);color:var(--urban);background:rgba(52,211,153,0.07);top:0;left:75px;}
-.vc-energy{border-color:var(--energy);color:var(--energy);background:rgba(251,146,60,0.07);bottom:0;left:0;}
-.vc-ai{border-color:var(--ai);color:var(--ai);background:rgba(167,139,250,0.07);bottom:0;right:0;}
+.vcircle{position:absolute;border-radius:50%;width:210px;height:210px;border:1px solid;transition:all 0.7s cubic-bezier(0.34,1.4,0.64,1);display:flex;align-items:flex-start;justify-content:center;padding-top:1.1rem;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;mix-blend-mode:screen;}
+/* Urban: top-centre */
+.vc-urban{border-color:var(--urban);color:var(--urban);background:rgba(52,211,153,0.07);top:10px;left:85px;}
+/* Energy: bottom-left */
+.vc-energy{border-color:var(--energy);color:var(--energy);background:rgba(251,146,60,0.07);bottom:10px;left:10px;}
+/* AI: bottom-right */
+.vc-ai{border-color:var(--ai);color:var(--ai);background:rgba(167,139,250,0.07);bottom:10px;right:10px;}
 
-/* intersection zone labels */
-.venn-zone{position:absolute;font-family:var(--mono);font-size:8.5px;letter-spacing:0.07em;text-transform:uppercase;text-align:center;line-height:1.4;transition:all 0.5s ease;opacity:0.4;pointer-events:none;}
-.vz-ue{top:62%;left:22%;color:var(--ue);}
-.vz-ua{top:28%;left:50%;transform:translateX(-50%);color:var(--ua);}
-.vz-ea{top:62%;right:18%;color:var(--ea);}
-.vz-center{top:50%;left:50%;transform:translate(-50%,-50%);color:var(--ink-2);font-size:8px;}
+/* intersection zone labels — placed at true overlap centres */
+.venn-zone{position:absolute;font-family:var(--mono);font-size:8px;letter-spacing:0.07em;text-transform:uppercase;text-align:center;line-height:1.4;transition:all 0.5s ease;opacity:0.4;pointer-events:none;}
+/* Urban ∩ Energy — left overlap */
+.vz-ue{top:60%;left:16%;transform:translate(-50%,-50%);color:var(--ue);}
+/* Urban ∩ AI — right overlap */
+.vz-ua{top:60%;right:10%;transform:translate(50%,-50%);color:var(--ua);}
+/* Energy ∩ AI — bottom overlap */
+.vz-ea{bottom:12%;left:50%;transform:translateX(-50%);color:var(--ea);}
+/* Centre */
+.vz-center{top:54%;left:50%;transform:translate(-50%,-50%);color:var(--ink-2);font-size:7.5px;}
 
 .venn-zone.lit{opacity:1;}
 /* glow blobs for active intersections */
 .vblob{position:absolute;border-radius:50%;filter:blur(28px);opacity:0;transition:opacity 0.6s ease;pointer-events:none;}
-.vb-ue{width:90px;height:90px;background:var(--ue);top:57%;left:14%;}
-.vb-ua{width:90px;height:90px;background:var(--ua);top:16%;left:40%;}
-.vb-ea{width:90px;height:90px;background:var(--ea);top:57%;right:10%;}
-.vb-center{width:60px;height:60px;background:white;top:46%;left:43%;}
+.vb-ue{width:80px;height:80px;background:var(--ue);top:55%;left:18%;transform:translate(-50%,-50%);}
+.vb-ua{width:80px;height:80px;background:var(--ua);top:55%;right:12%;transform:translate(50%,-50%);}
+.vb-ea{width:80px;height:80px;background:var(--ea);bottom:14%;left:50%;transform:translateX(-50%);}
+.vb-center{width:60px;height:60px;background:white;top:52%;left:50%;transform:translate(-50%,-50%);}
 .vblob.lit{opacity:0.18;}
 
 /* ── TEXT PANEL ── */
@@ -142,33 +149,9 @@ h1.hero-title em{font-style:italic;}
 .phase-all .op-eyebrow{color:var(--ink-2);}
 .phase-all .op-eyebrow::before{background:var(--ink-2);}
 
-/* ── FULL PUBLICATIONS ── */
-#publications{padding:8rem 3rem;position:relative;}
-#publications::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);}
-
+/* ── SEC LABEL ── */
 .sec-label{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3.5rem;display:flex;align-items:center;gap:0.75rem;}
 .sec-label::before{content:'';width:20px;height:1px;background:var(--ink-3);display:inline-block;}
-
-.pub-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
-.pub-col-header{padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
-.pub-col-body{padding:1.5rem 1.75rem;display:flex;flex-direction:column;gap:1.5rem;}
-.pub-col-urban .pub-col-header{color:var(--urban);}
-.pub-col-ue .pub-col-header{color:var(--ue);}
-.pub-col-ai .pub-col-header{color:var(--ai);}
-
-.pub-entry{padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
-.pub-entry:last-child{border-bottom:none;padding-bottom:0;}
-.pub-status{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;display:inline-block;padding:0.2rem 0.55rem;border-radius:2px;border:1px solid;}
-.status-pub{color:var(--urban);border-color:rgba(52,211,153,0.3);background:var(--urban-dim);}
-.status-wip{color:var(--ue);border-color:rgba(245,158,11,0.3);background:var(--ue-dim);}
-.status-chapter{color:var(--ai);border-color:rgba(167,139,250,0.3);background:var(--ai-dim);}
-.status-ra{color:var(--ink-3);border-color:rgba(240,238,232,0.1);background:rgba(240,238,232,0.03);}
-.status-conf{color:var(--ua);border-color:rgba(96,165,250,0.3);background:var(--ua-dim);}
-.pub-title{font-family:var(--serif);font-size:1.05rem;font-style:italic;font-weight:300;line-height:1.35;margin-bottom:0.5rem;color:var(--ink);}
-.pub-title a{color:inherit;text-decoration:none;}
-.pub-title a:hover{text-decoration:underline;text-underline-offset:3px;}
-.pub-collab{font-size:0.8rem;color:var(--ink-3);line-height:1.65;}
-.pub-collab strong{color:var(--ink-2);font-weight:400;}
 
 /* ── TIMELINE ── */
 #timeline{padding:7rem 3rem;border-top:1px solid var(--border);}
@@ -226,18 +209,85 @@ footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:
 .reveal.visible{opacity:1;transform:translateY(0);}
 
 @media(max-width:800px){
-  nav{padding:1rem 1.5rem;}
-  .nav-links{gap:1.5rem;}
-  #hero{padding:0 1.5rem 4rem;}
-  .overlap-scene{grid-template-columns:1fr;padding:0 1.5rem;gap:2rem;}
-  .venn-container{width:280px;height:280px;margin:0 auto;}
-  .vcircle{width:170px;height:170px;}
-  .vc-urban{top:0;left:55px;}
-  #publications,.tl-item,#education,#contact{padding:5rem 1.5rem;}
-  .tl-item{grid-template-columns:1fr;gap:0.75rem;padding-left:2rem;}
-  footer{flex-direction:column;gap:0.5rem;text-align:center;}
+  /* hide custom cursor on touch */
   .cursor,.cursor-ring{display:none;}
   body{cursor:auto;}
+
+  /* nav */
+  nav{padding:0.85rem 1.25rem;}
+  .nav-links{gap:1.25rem;}
+  .nav-links a{font-size:10px;}
+
+  /* hero */
+  #hero{padding:5.5rem 1.25rem 3.5rem;min-height:100svh;}
+  h1.hero-title{font-size:clamp(2.4rem,11vw,4rem);line-height:1.08;}
+  .hero-sub{font-size:0.9rem;margin-top:1.5rem;}
+  .hero-domains{gap:0.6rem;margin-top:1.75rem;}
+  .domain-badge{font-size:9px;padding:0.3rem 0.7rem;}
+  .scroll-hint{right:1.25rem;bottom:1.5rem;}
+
+  /* overlap / venn */
+  .overlap-scene{
+    grid-template-columns:1fr;
+    padding:0 1.25rem;
+    gap:1.75rem;
+    /* stack: text on top, venn below */
+    grid-template-rows:auto auto;
+  }
+  /* put text first on mobile */
+  .overlap-text-wrap{order:-1;}
+  .venn-container{
+    width:260px;height:260px;
+    margin:0 auto;
+    order:1;
+  }
+  .vcircle{width:155px;height:155px;font-size:8px;padding-top:0.85rem;}
+  .vc-urban{top:8px;left:50px;}
+  .vc-energy{bottom:8px;left:5px;}
+  .vc-ai{bottom:8px;right:5px;}
+  .op-h2{font-size:clamp(1.5rem,6vw,2rem);}
+  .op-p{font-size:0.875rem;}
+  .op-works{gap:0.45rem;}
+  .op-work-item{font-size:0.8rem;}
+
+  /* publications */
+  #publications{padding:4rem 1.25rem;}
+  .pub-columns{grid-template-columns:1fr;}
+  .pub-col-body{padding:1.25rem;}
+  .pub-col-header{padding:1rem 1.25rem;}
+  .pub-title{font-size:0.95rem;}
+
+  /* timeline */
+  #timeline{padding:4rem 1.25rem;}
+  .tl-track::before{left:0;}
+  .tl-item{
+    grid-template-columns:1fr;
+    gap:0.6rem;
+    padding-left:1.75rem;
+    padding-top:1.5rem;
+    padding-bottom:1.5rem;
+  }
+  .tl-item::before{left:-4px;top:1.8rem;}
+  .tl-right h3{font-size:1.2rem;}
+  .tl-right ul li{font-size:0.835rem;}
+
+  /* education */
+  #education{padding:4rem 1.25rem;}
+  .edu-grid{grid-template-columns:1fr;gap:1rem;margin-top:2rem;}
+  .edu-card{padding:1.75rem;}
+  .edu-degree{font-size:1.2rem;}
+  .gpa-ghost{font-size:2.4rem;}
+
+  /* contact */
+  #contact{padding:5rem 1.25rem 4rem;}
+  .contact-title{font-size:clamp(2.4rem,11vw,4rem);}
+  .contact-links-row{flex-direction:column;gap:0.65rem;margin-bottom:3rem;}
+  .contact-pill{font-size:10px;padding:0.65rem 1.2rem;}
+
+  footer{flex-direction:column;gap:0.4rem;text-align:center;padding:1.5rem 1.25rem;}
+
+  /* section labels */
+  .sec-label{font-size:9px;}
 }
 </style>
 </head>
@@ -251,8 +301,7 @@ footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:
   <span class="nav-name">He Yiyang 何一阳</span>
   <div class="nav-links">
     <a href="#overlap-engine">Research</a>
-    <a href="#publications">Publications</a>
-    <a href="#timeline">Work</a>
+    <a href="#timeline">Experience</a>
     <a href="#education">Education</a>
     <a href="#contact">Contact</a>
   </div>
@@ -372,103 +421,10 @@ footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:
   </div>
 </section>
 
-<!-- ── FULL PUBLICATIONS ── -->
-<section id="publications">
-  <div class="sec-label">All Research &amp; Publications</div>
-  <div class="pub-columns reveal">
-
-    <!-- Urban & Grassroots -->
-    <div class="pub-col pub-col-urban" style="background:var(--void);">
-      <div class="pub-col-header">Urban &amp; Grassroots</div>
-      <div class="pub-col-body">
-        <div class="pub-entry">
-          <span class="pub-status status-wip">In Progress</span>
-          <div class="pub-title">Urban Grassroots in the Making of Jurong Town</div>
-          <div class="pub-collab">With A/P Daniel P. S. Goh (NUS)</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-ra">RA &amp; Digital Manager</span>
-          <div class="pub-title">Global Caste Lab</div>
-          <div class="pub-collab">Researcher &amp; digital manager with Asst Prof Suraj Milind Yengde (University of Pennsylvania)</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-ra">Research Assistant</span>
-          <div class="pub-title">Family-Friendly Workplace Practices and Fertility Intentions in Singapore</div>
-          <div class="pub-collab">Research collaboration with the Prime Minister's Office, National Talent and Population Division, led by A/P Senhu Wang (NUS)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Urban × Energy -->
-    <div class="pub-col pub-col-ue" style="background:var(--void);">
-      <div class="pub-col-header" style="color:var(--ue);">Urban × Energy &amp; Climate</div>
-      <div class="pub-col-body">
-        <div class="pub-entry">
-          <span class="pub-status status-wip">In Progress</span>
-          <div class="pub-title">Climate Justice in K–12 School District Sustainability Planning: Durability, Equity, and Institutional Change</div>
-          <div class="pub-collab">With Asst Prof Akira Drake Rodriguez (University of Pennsylvania)</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-wip">In Progress</span>
-          <div class="pub-title">Just and Inclusive Energy Transitions in South and Southeast Asia</div>
-          <div class="pub-collab">With Prof Petra Tschakert (NUS)</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-wip">In Progress</span>
-          <div class="pub-title">US Data Center Policy</div>
-          <div class="pub-collab">With Dr Vasundhara Kaul, Simon An, Asst Prof Daniel S. Schiff (Purdue)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AI & Labour -->
-    <div class="pub-col pub-col-ai" style="background:var(--void);">
-      <div class="pub-col-header">AI &amp; Labour / Education</div>
-      <div class="pub-col-body">
-        <div class="pub-entry">
-          <span class="pub-status status-pub">Published · CHI '26</span>
-          <div class="pub-title"><a href="https://doi.org/10.1145/3772318.3790825" target="_blank">"It's Messy…But I Feel Balanced": Unpacking Flexible Workers' Rhythm-Making Practices Using an Asset-Based Approach</a></div>
-          <div class="pub-collab">With <strong>Daniel Campos Muñiz, Tse Pei Ng</strong>, Asst Prof Janghee Cho, A/P Jung-Joo Lee, Ker Wey Aw · Article No. 232, pp. 1–20</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-wip">In Progress</span>
-          <div class="pub-title">Predicting the Impacts of AI on Workers: A Systematic Literature Review</div>
-          <div class="pub-collab">Journal article &amp; book chapter · With Asst Prof Luísa Nazareno (VCU), Asst Prof Daniel S. Schiff (Purdue), Asst Prof Zeewan Lee (LKY SPP)</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-chapter">Book Chapter · In Progress</span>
-          <div class="pub-title">A Socio-Ethical Research Agenda for AI and the Future of Work</div>
-          <div class="pub-collab">Luísa Nazareno, Vasundhara Kaul, Shiva Shakouri, Ashley Ko, <strong>Yiyang He</strong>, Keira Lavelle, Hardik Amin, Lucas Wiese, Daniel S. Schiff</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-conf">Conference · HECS 2025</span>
-          <div class="pub-title"><a href="https://ctlt.nus.edu.sg/hecs-2025/abstracts/hecs-2025-pp-soo-et-al/" target="_blank">Intentional Design: GenAI Integration Through the Human–AI Matrix</a></div>
-          <div class="pub-collab">Paper presentation, Higher Education Conference in Singapore, 10 Dec 2025 · A/P Yuen Jien Soo, Dr Verily Tan, Dr Chun Liang Terrence Tan, Dr Mei Hui Liu, <strong>Yiyang He</strong> (NUS)</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-ra">Research Assistant</span>
-          <div class="pub-title">Supporting Classroom Inquiry and Professional Development Evaluation at NUS</div>
-          <div class="pub-collab">Centre for Teaching, Learning and Technology, led by Dr Kiruthika Ragupathi</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-ra">Research Assistant</span>
-          <div class="pub-title">The University Disrupted: Higher Education in the Age of Artificial Intelligence</div>
-          <div class="pub-collab">Book project with Prof Simon Chesterman and A/P Loy Hui-Chieh (NUS)</div>
-        </div>
-        <div class="pub-entry">
-          <span class="pub-status status-ra">Research Assistant</span>
-          <div class="pub-title">The Overwork Machine: How Managers Normalise Endless Work in China's Technology Industry</div>
-          <div class="pub-collab">Book project with A/P Senhu Wang (NUS)</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
 
 <!-- ── TIMELINE ── -->
 <section id="timeline">
-  <div class="sec-label">Experience</div>
+  <div class="sec-label">Experience &amp; Internships</div>
   <div class="tl-track">
 
     <div class="tl-item">
@@ -563,7 +519,7 @@ footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:
     <h2 class="contact-title">Let's think<br>together.</h2>
     <div class="contact-links-row">
       <a class="contact-pill" href="mailto:heyiyang@u.nus.edu">
-        <span class="dot-a"></span> yiyanghe@u.nus.edu
+        <span class="dot-a"></span> heyiyang@u.nus.edu
       </a>
       <a class="contact-pill" href="https://www.linkedin.com/in/he-yiyang/" target="_blank">
         <span class="dot-u"></span> LinkedIn
