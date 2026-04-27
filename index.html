@@ -35,7 +35,8 @@
   --mono: 'JetBrains Mono', monospace;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+button{font:inherit;background:none;border:none;padding:0;cursor:none;}
+html{scroll-behavior:auto;}
 body{background:var(--void);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.6;overflow-x:hidden;cursor:none;}
 
 /* ── CURSOR ── */
@@ -51,78 +52,202 @@ nav.scrolled{background:rgba(5,5,8,0.88);backdrop-filter:blur(20px);border-botto
 .nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;transition:color 0.2s;}
 .nav-links a:hover{color:var(--ink);}
 
-/* ── HERO ── */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:7rem 3rem 5.5rem;position:relative;overflow:hidden;}
-.hero-canvas{position:absolute;inset:0;z-index:0;}
-.hero-orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:0;animation:orbIn 2.5s ease forwards;}
-.orb-urban{width:550px;height:550px;background:var(--urban);top:-80px;left:-100px;animation-delay:0.3s;}
-.orb-energy{width:480px;height:480px;background:var(--energy);bottom:-60px;right:-80px;animation-delay:0.6s;}
-.orb-ai{width:400px;height:400px;background:var(--ai);top:40%;right:25%;animation-delay:0.9s;}
-@keyframes orbIn{0%{opacity:0;transform:scale(0.85);}100%{opacity:0.1;transform:scale(1);}}
-.hero-canvas::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 60%,transparent 40%,var(--void) 100%);pointer-events:none;}
+/* ── HERO HUB ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;position:relative;overflow:hidden;text-align:center;}
 
-.hero-content{position:relative;z-index:1;}
-.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:fadeUp 0.8s ease 0.3s forwards;}
-.hero-eyebrow span{display:inline-block;width:28px;height:1px;background:var(--ink-3);}
+/* ambient orbs */
+.hero-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:0;animation:orbIn 3s ease forwards;will-change:opacity;}
+.orb-urban{width:600px;height:600px;background:var(--urban);top:-120px;left:-160px;animation-delay:0.2s;}
+.orb-energy{width:500px;height:500px;background:var(--energy);bottom:-100px;right:-120px;animation-delay:0.5s;}
+.orb-ai{width:420px;height:420px;background:var(--ai);top:35%;right:20%;animation-delay:0.8s;}
+@keyframes orbIn{0%{opacity:0;transform:scale(0.8);}100%{opacity:0.08;transform:scale(1);}}
+.hero-canvas::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 50%,transparent 20%,var(--void) 80%);pointer-events:none;}
 
-h1.hero-title{font-family:var(--serif);font-size:clamp(3.2rem,7.5vw,7.8rem);font-weight:300;line-height:1.03;letter-spacing:-0.02em;max-width:950px;opacity:0;animation:fadeUp 1s ease 0.5s forwards;}
-h1.hero-title em{font-style:italic;}
-.grad-urban{background:linear-gradient(120deg,var(--urban),var(--ue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.grad-energy{background:linear-gradient(120deg,var(--ue),var(--energy));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.grad-ai{background:linear-gradient(120deg,var(--ua),var(--ai));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+/* text stack */
+.hero-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:0;}
 
-.hero-sub{max-width:580px;font-size:1rem;color:var(--ink-2);line-height:1.85;margin-top:2.25rem;opacity:0;animation:fadeUp 0.8s ease 0.85s forwards;}
+.hero-greeting{font-family:var(--mono);font-size:clamp(0.65rem,1.2vw,0.78rem);letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-3);opacity:0;animation:fadeUp 0.7s ease 0.2s forwards;margin-bottom:1.4rem;}
 
-.hero-domains{display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s ease 1.1s forwards;}
-.domain-badge{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem 0.85rem;border-radius:999px;border:1px solid;}
-.db-urban{color:var(--urban);border-color:rgba(52,211,153,0.35);background:var(--urban-dim);}
-.db-energy{color:var(--energy);border-color:rgba(251,146,60,0.35);background:var(--energy-dim);}
-.db-ai{color:var(--ai);border-color:rgba(167,139,250,0.35);background:var(--ai-dim);}
+h1.hero-name{font-family:var(--serif);font-size:clamp(3.8rem,9vw,8.5rem);font-weight:300;line-height:0.95;letter-spacing:-0.03em;opacity:0;animation:fadeUp 1s ease 0.45s forwards;margin-bottom:1.6rem;}
+h1.hero-name em{font-style:italic;background:linear-gradient(120deg,var(--urban) 0%,var(--ua) 50%,var(--ai) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
-.scroll-hint{position:absolute;bottom:3rem;right:3rem;display:flex;flex-direction:column;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);opacity:0;animation:fadeIn 1s ease 1.6s forwards;}
-.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,transparent,var(--ink-3));animation:scrollPulse 2s ease-in-out infinite;}
+.hero-sub{font-family:var(--sans);font-size:clamp(0.82rem,1.4vw,0.95rem);color:var(--ink-3);line-height:1.75;max-width:460px;opacity:0;animation:fadeUp 0.8s ease 0.75s forwards;margin-bottom:3.5rem;}
+
+/* ── NAV BUBBLES ── */
+.hero-bubbles{display:flex;gap:1.6rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp 0.9s ease 1s forwards;}
+
+.hbubble{
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:148px;height:148px;border-radius:50%;
+  text-decoration:none;cursor:none;
+  transition:transform 0.45s cubic-bezier(0.34,1.35,0.64,1);
+  flex-shrink:0;
+}
+
+/* frosted ring */
+.hbubble::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.03);
+  transition:border-color 0.4s,background 0.4s;
+}
+/* glow ring on hover */
+.hbubble::after{
+  content:'';position:absolute;inset:-1px;border-radius:50%;
+  opacity:0;transition:opacity 0.4s ease;
+  pointer-events:none;
+}
+
+.hbubble:hover{transform:scale(1.1) translateY(-4px);}
+.hbubble:hover::before{background:rgba(255,255,255,0.055);border-color:rgba(255,255,255,0.22);}
+.hbubble:hover::after{opacity:1;}
+
+/* per-bubble accent colours */
+.hb-education::after{box-shadow:0 0 60px 12px rgba(167,139,250,0.3),inset 0 0 40px rgba(167,139,250,0.08);}
+.hb-education:hover::before{border-color:rgba(167,139,250,0.45);}
+.hb-education .hbubble-num{color:var(--ai);}
+
+.hb-research::after{box-shadow:0 0 60px 12px rgba(96,165,250,0.28),inset 0 0 40px rgba(96,165,250,0.08);}
+.hb-research:hover::before{border-color:rgba(96,165,250,0.45);}
+.hb-research .hbubble-num{color:var(--ua);}
+
+.hb-experience::after{box-shadow:0 0 60px 12px rgba(251,146,60,0.28),inset 0 0 40px rgba(251,146,60,0.08);}
+.hb-experience:hover::before{border-color:rgba(251,146,60,0.45);}
+.hb-experience .hbubble-num{color:var(--energy);}
+
+.hb-contact::after{box-shadow:0 0 60px 12px rgba(52,211,153,0.28),inset 0 0 40px rgba(52,211,153,0.08);}
+.hb-contact:hover::before{border-color:rgba(52,211,153,0.45);}
+.hb-contact .hbubble-num{color:var(--urban);}
+
+.hbubble-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:0.55rem;}
+
+.hbubble-num{
+  font-family:var(--serif);font-size:2rem;font-weight:300;font-style:italic;
+  line-height:1;letter-spacing:-0.02em;
+  transition:transform 0.35s cubic-bezier(0.34,1.4,0.64,1);
+}
+.hbubble:hover .hbubble-num{transform:scale(1.15);}
+
+.hbubble-label{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.15em;
+  text-transform:uppercase;color:rgba(240,238,232,0.5);
+  transition:color 0.3s,letter-spacing 0.3s;
+}
+.hbubble:hover .hbubble-label{color:rgba(240,238,232,0.9);letter-spacing:0.2em;}
+
+/* mobile bubbles */
+@media(max-width:600px){
+  .hbubble{width:116px;height:116px;}
+  .hbubble-num{font-size:1.6rem;}
+  .hbubble-label{font-size:8.5px;}
+  .hero-bubbles{gap:1rem;}
+}
+
+/* scroll nudge */
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);opacity:0;animation:fadeIn 1s ease 2s forwards;}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--ink-3));animation:scrollPulse 2s ease-in-out infinite;}
 @keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(0.8);}50%{opacity:1;transform:scaleY(1);}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-/* ── OVERLAP ENGINE (sticky scroll) ── */
-#overlap-engine{min-height:600vh;position:relative;}
-.overlap-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+/* ── RESEARCH SECTION ── */
+#overlap-engine{position:relative;}
 
-.overlap-scene{width:100%;max-width:1200px;margin:0 auto;padding:0 3rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+/* sticky full-viewport panel — no scroll, wheel drives phases */
+.overlap-sticky{
+  height:calc(100vh - 10rem);
+  display:flex;flex-direction:column;
+  overflow:hidden;z-index:2;
+  background:var(--void);
+}
+
+/* phase dot indicators */
+.phase-dots{display:flex;gap:0.5rem;align-items:center;}
+.phase-dot{
+  width:6px;height:6px;border-radius:50%;
+  border:1px solid var(--ink-3);background:transparent;
+  cursor:pointer;transition:background 0.3s,border-color 0.3s,transform 0.3s;
+}
+.phase-dot.active{background:var(--ink);border-color:var(--ink);transform:scale(1.3);}
+
+
+
+/* main two-column row: left=venn, right=text+cards */
+.overlap-scene{
+  flex:1;
+  width:100%;max-width:1100px;margin:0 auto;
+  padding:0 5rem 0 4rem;
+  padding-top:0.25rem;
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:3.5rem;
+  align-items:stretch;
+  overflow:hidden;
+}
+
+/* left: venn centred vertically */
+.venn-col{
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* right: text on top, cards below — single scrollable column */
+.right-col{
+  display:flex;flex-direction:column;
+  justify-content:flex-start;
+  gap:1.5rem;
+  min-height:0;
+  padding:1rem 0;
+}
 
 /* ── VENN DIAGRAM ── */
-.venn-container{position:relative;width:380px;height:380px;flex-shrink:0;}
-.vcircle{position:absolute;border-radius:50%;width:210px;height:210px;border:1px solid;transition:all 0.7s cubic-bezier(0.34,1.4,0.64,1);display:flex;align-items:flex-start;justify-content:center;padding-top:1.1rem;font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;mix-blend-mode:screen;}
+.venn-container{position:relative;width:280px;height:280px;flex-shrink:0;}
+.vcircle{position:absolute;border-radius:50%;width:160px;height:160px;border:1px solid;transition:top 0.7s cubic-bezier(0.34,1.4,0.64,1),bottom 0.7s cubic-bezier(0.34,1.4,0.64,1),left 0.7s cubic-bezier(0.34,1.4,0.64,1),right 0.7s cubic-bezier(0.34,1.4,0.64,1),transform 0.7s cubic-bezier(0.34,1.4,0.64,1),opacity 0.45s ease,box-shadow 0.5s ease;display:flex;align-items:flex-start;justify-content:center;padding-top:0.85rem;font-family:var(--mono);font-size:8px;letter-spacing:0.08em;text-transform:uppercase;mix-blend-mode:screen;will-change:transform,opacity;}
 /* Urban: top-centre */
-.vc-urban{border-color:var(--urban);color:var(--urban);background:rgba(52,211,153,0.07);top:10px;left:85px;}
+.vc-urban{border-color:var(--urban);color:var(--urban);background:rgba(52,211,153,0.07);top:8px;left:62px;}
 /* Energy: bottom-left */
-.vc-energy{border-color:var(--energy);color:var(--energy);background:rgba(251,146,60,0.07);bottom:10px;left:10px;}
+.vc-energy{border-color:var(--energy);color:var(--energy);background:rgba(251,146,60,0.07);bottom:8px;left:8px;}
 /* AI: bottom-right */
-.vc-ai{border-color:var(--ai);color:var(--ai);background:rgba(167,139,250,0.07);bottom:10px;right:10px;}
+.vc-ai{border-color:var(--ai);color:var(--ai);background:rgba(167,139,250,0.07);bottom:8px;right:8px;}
 
 /* intersection zone labels — placed at true overlap centres */
-.venn-zone{position:absolute;font-family:var(--mono);font-size:8px;letter-spacing:0.07em;text-transform:uppercase;text-align:center;line-height:1.4;transition:all 0.5s ease;opacity:0.4;pointer-events:none;}
-/* Urban ∩ Energy — left overlap */
-.vz-ue{top:60%;left:16%;transform:translate(-50%,-50%);color:var(--ue);}
-/* Urban ∩ AI — right overlap */
-.vz-ua{top:60%;right:10%;transform:translate(50%,-50%);color:var(--ua);}
-/* Energy ∩ AI — bottom overlap */
-.vz-ea{bottom:12%;left:50%;transform:translateX(-50%);color:var(--ea);}
-/* Centre */
-.vz-center{top:54%;left:50%;transform:translate(-50%,-50%);color:var(--ink-2);font-size:7.5px;}
+.venn-zone{position:absolute;font-family:var(--mono);font-size:8px;letter-spacing:0.07em;text-transform:uppercase;text-align:center;line-height:1.4;transition:opacity 0.5s ease,letter-spacing 0.5s ease;opacity:0.4;pointer-events:none;}
+/* Urban ∩ Energy — left overlap, mid-height */
+.vz-ue{top:58%;left:14%;transform:translate(-50%,-50%);color:var(--ue);}
+/* Urban ∩ AI — right overlap, pulled well inside the overlap */
+.vz-ua{top:57%;right:24%;transform:translate(50%,-50%);color:var(--ua);}
+/* Energy ∩ AI — bottom overlap, centre */
+.vz-ea{bottom:10%;left:50%;transform:translateX(-50%);color:var(--ea);}
+/* Education — inside AI circle, away from overlaps */
+.vz-ed{bottom:18%;right:4%;transform:translateX(0);color:var(--ai);}
+/* Centre — always faintly visible, representing the through-line */
+.vz-center{top:54%;left:50%;transform:translate(-50%,-50%);color:var(--ink-2);font-size:7px;opacity:0.3;}
 
 .venn-zone.lit{opacity:1;}
+/* center stays always on at low opacity — never fades to 0 */
+#vz-center{opacity:0.35 !important;}
+#vz-center.lit{opacity:0.7 !important;}
 /* glow blobs for active intersections */
-.vblob{position:absolute;border-radius:50%;filter:blur(28px);opacity:0;transition:opacity 0.6s ease;pointer-events:none;}
-.vb-ue{width:80px;height:80px;background:var(--ue);top:55%;left:18%;transform:translate(-50%,-50%);}
-.vb-ua{width:80px;height:80px;background:var(--ua);top:55%;right:12%;transform:translate(50%,-50%);}
-.vb-ea{width:80px;height:80px;background:var(--ea);bottom:14%;left:50%;transform:translateX(-50%);}
-.vb-center{width:60px;height:60px;background:white;top:52%;left:50%;transform:translate(-50%,-50%);}
+.vblob{position:absolute;border-radius:50%;filter:blur(18px);opacity:0;transition:opacity 0.5s ease;pointer-events:none;}
+.vb-ue{width:60px;height:60px;background:var(--ue);top:58%;left:18%;transform:translate(-50%,-50%);}
+.vb-ua{width:60px;height:60px;background:var(--ua);top:57%;right:30%;transform:translate(50%,-50%);}
+.vb-ea{width:60px;height:60px;background:var(--ea);bottom:12%;left:50%;transform:translateX(-50%);}
+.vb-center{width:45px;height:45px;background:white;top:54%;left:50%;transform:translate(-50%,-50%);}
 .vblob.lit{opacity:0.18;}
 
-/* ── TEXT PANEL ── */
-.overlap-text-wrap{position:relative;min-height:420px;}
+/* AI circle — AI/Tech main + Work / Education sub-labels */
+.vc-ai{align-items:center;justify-content:center;padding-top:0;}
+.ai-split{display:flex;flex-direction:column;align-items:center;gap:2px;justify-content:center;}
+.ai-label-main{font-family:var(--mono);font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ai);line-height:1.5;}
+.ai-label-div{width:36px;height:1px;background:rgba(167,139,250,0.35);margin:3px 0;}
+.ai-label-work,.ai-label-ed{font-family:var(--mono);font-size:6.5px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(167,139,250,0.6);line-height:1.6;transition:opacity 0.4s,color 0.4s;}
+/* highlight the active sub-label */
+.phase-work-active .ai-label-work{color:var(--ai);opacity:1;}
+.phase-work-active .ai-label-ed{opacity:0.25;}
+.phase-ed-active .ai-label-ed{color:var(--ai);opacity:1;}
+.phase-ed-active .ai-label-work{opacity:0.25;}
+.overlap-text-wrap{position:relative;flex-shrink:0;}
 .overlap-phase{position:absolute;inset:0;opacity:0;transform:translateY(18px);transition:opacity 0.5s ease,transform 0.5s ease;pointer-events:none;}
 .overlap-phase.active{opacity:1;transform:translateY(0);pointer-events:auto;position:relative;}
 
@@ -142,6 +267,8 @@ h1.hero-title em{font-style:italic;}
 .phase-intro .op-eyebrow::before{background:var(--ink-3);}
 .phase-ue .op-eyebrow{color:var(--ue);}
 .phase-ue .op-eyebrow::before{background:var(--ue);}
+.phase-urban .op-eyebrow{color:var(--urban);}
+.phase-urban .op-eyebrow::before{background:var(--urban);}
 .phase-ua .op-eyebrow{color:var(--ua);}
 .phase-ua .op-eyebrow::before{background:var(--ua);}
 .phase-ea .op-eyebrow{color:var(--ea);}
@@ -150,7 +277,7 @@ h1.hero-title em{font-style:italic;}
 .phase-all .op-eyebrow::before{background:var(--ink-2);}
 
 /* ── SEC LABEL ── */
-.sec-label{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3.5rem;display:flex;align-items:center;gap:0.75rem;}
+.sec-label{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.75rem;}
 .sec-label::before{content:'';width:20px;height:1px;background:var(--ink-3);display:inline-block;}
 
 /* ── TIMELINE ── */
@@ -204,89 +331,226 @@ h1.hero-title em{font-style:italic;}
 
 footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;letter-spacing:0.08em;color:var(--ink-3);}
 
+
+/* ── PUBLICATIONS ── */
+.pub-entry-row{display:grid;grid-template-columns:120px 1fr;gap:2rem;padding:1.5rem 0;border-bottom:1px solid var(--border);align-items:start;}
+.pub-entry-row:first-child{border-top:1px solid var(--border);}
+.pub-status-col{padding-top:0.15rem;}
+.pub-badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.6rem;border-radius:2px;border:1px solid;white-space:nowrap;}
+.pub-badge-pub{color:var(--urban);border-color:rgba(52,211,153,0.3);background:var(--urban-dim);}
+.pub-badge-conf{color:var(--ua);border-color:rgba(96,165,250,0.3);background:var(--ua-dim);}
+.pub-badge-wip{color:var(--ue);border-color:rgba(245,158,11,0.3);background:var(--ue-dim);}
+.pub-badge-chapter{color:var(--ai);border-color:rgba(167,139,250,0.3);background:var(--ai-dim);}
+.pub-badge-ra{color:var(--ink-3);border-color:rgba(240,238,232,0.1);background:rgba(240,238,232,0.03);}
+.pub-title-link{font-family:var(--serif);font-size:1.05rem;font-style:italic;font-weight:300;line-height:1.4;color:var(--ink);text-decoration:none;display:block;margin-bottom:0.5rem;}
+a.pub-title-link:hover{text-decoration:underline;text-underline-offset:3px;color:var(--ink);}
+.pub-authors-line{font-family:var(--mono);font-size:10px;color:var(--ink-3);line-height:1.7;margin-bottom:0.35rem;}
+
+.pub-venue-line{font-size:0.8rem;color:var(--ink-3);line-height:1.6;}
+.pub-venue-line em{font-style:italic;}
+.pub-doi{color:var(--ink-3);text-decoration:underline;text-underline-offset:2px;}
+.pub-doi:hover{color:var(--ink-2);}
+@media(max-width:800px){
+  .pub-entry-row{grid-template-columns:1fr;gap:0.5rem;}
+  .pub-entry-row{padding:1.1rem 0;}
+}
+
+
+/* ── BACKGROUND COLOUR SHIFT ── */
+.overlap-sticky{transition:background 1s ease;}
+
+/* animated bg orbs inside sticky panel */
+.scene-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.scene-orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:0;transition:opacity 1s ease,background 1s ease;will-change:opacity;}
+.scene-orb.lit{opacity:0.13;}
+.sorb-1{width:600px;height:600px;top:-150px;left:-150px;}
+.sorb-2{width:500px;height:500px;bottom:-100px;right:-100px;}
+.sorb-3{width:400px;height:400px;top:30%;right:5%;}
+
+/* ── VENN ANIMATION ── */
+/* circles animate position + size on phase change */
+/* vcircle transition defined above */
+.vcircle.spotlight{box-shadow:0 0 40px 8px currentColor;}
+/* base positions handled by inline style changes in JS */
+
+/* zone label animation */
+.venn-zone{transition:opacity 0.5s ease,letter-spacing 0.4s ease;}
+.venn-zone.lit{opacity:1;letter-spacing:0.1em;}
+
+
+/* ── PUB CARDS ZONE — inside right column, below writeup ── */
+.pub-cards-zone{
+  flex:1;min-height:0;border-top:1px solid var(--border);
+  padding-top:0.85rem;display:flex;flex-direction:column;
+}
+.pub-cards-header{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.6rem;flex-shrink:0;
+}
+.pub-cards-header::before{content:'';width:16px;height:1px;background:var(--ink-3);display:inline-block;}
+.pub-card-deck{
+  display:flex;flex-direction:column;gap:0;
+  overflow-y:auto;flex:1;min-height:0;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+
+/* compact clickable row */
+.pub-cloud{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0.65rem;
+  padding:0.45rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  opacity:0;transform:translateX(-8px);
+  transition:opacity 0.22s ease,transform 0.22s ease;
+  cursor:pointer;
+  position:relative;
+}
+.pub-cloud.visible{opacity:1;transform:translateX(0);}
+.pub-cloud:hover .pub-cloud-title{color:var(--ink);}
+.pub-cloud:hover .pub-cloud-arrow{opacity:1;}
+
+.pub-cloud-badge{
+  display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:7.5px;letter-spacing:0.07em;text-transform:uppercase;
+  padding:0.15rem 0.4rem;border-radius:2px;border:1px solid;
+  white-space:nowrap;flex-shrink:0;justify-content:center;
+}
+.pub-cloud-main{min-width:0;}
+.pub-cloud-title{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.02em;
+  color:var(--ink-2);line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transition:color 0.2s;
+}
+.pub-cloud-title a{color:inherit;text-decoration:none;}
+.pub-cloud-authors{
+  font-family:var(--mono);font-size:8px;color:var(--ink-3);
+  line-height:1.5;letter-spacing:0.02em;margin-top:0.1rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  display:none;
+}
+.pub-cloud.expanded .pub-cloud-authors{display:block;}
+.pub-cloud-arrow{
+  font-family:var(--mono);font-size:10px;color:var(--ink-3);
+  opacity:0;transition:opacity 0.2s;flex-shrink:0;
+}
+/* expanded state */
+.pub-cloud.expanded .pub-cloud-title{white-space:normal;overflow:visible;text-overflow:unset;}
+.pub-cloud.expanded .pub-cloud-authors{white-space:normal;overflow:visible;text-overflow:unset;}
+.pub-cloud.expanded .pub-cloud-arrow{opacity:1;transform:rotate(180deg);}
+.pub-cloud-venue{
+  grid-column:2;font-family:var(--mono);font-size:8px;color:var(--ink-3);
+  margin-top:0.2rem;display:none;
+}
+.pub-cloud-link{
+  display:none;font-family:var(--mono);font-size:8px;letter-spacing:0.06em;
+  color:var(--ua);text-decoration:none;margin-top:0.35rem;
+}
+.pub-cloud-link:hover{text-decoration:underline;}
+.pub-cloud.expanded .pub-cloud-venue{display:block;}
+.pub-cloud.expanded .pub-cloud-link{display:inline-block;}
+
+/* badge colour variants */
+.badge-pub{color:var(--urban);border-color:rgba(52,211,153,0.3);background:var(--urban-dim);}
+.badge-conf{color:var(--ua);border-color:rgba(96,165,250,0.3);background:var(--ua-dim);}
+.badge-wip{color:var(--ue);border-color:rgba(245,158,11,0.3);background:var(--ue-dim);}
+.badge-chapter{color:var(--ai);border-color:rgba(167,139,250,0.3);background:var(--ai-dim);}
+.badge-ra{color:var(--ink-3);border-color:rgba(240,238,232,0.1);background:rgba(240,238,232,0.03);}
+
+
+
+/* ── SECTION SHOW/HIDE SYSTEM ── */
+.page-section{
+  display:none;
+  opacity:0;
+  animation:secIn 0.45s ease forwards;
+  padding:6rem 3rem 4rem;
+}
+.page-section.active{display:block;}
+@keyframes secIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* back button */
+.back-btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--ink-3);background:none;border:none;cursor:pointer;
+  padding:0.4rem 0;margin-bottom:2.5rem;
+  transition:color 0.2s;
+}
+.back-btn:hover{color:var(--ink);}
+.back-btn::before{content:'←';font-size:0.85rem;}
+
 /* ── UTILS ── */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
+/* ── MOBILE ── */
 @media(max-width:800px){
-  /* hide custom cursor on touch */
   .cursor,.cursor-ring{display:none;}
   body{cursor:auto;}
+  button{cursor:pointer;}
 
-  /* nav */
   nav{padding:0.85rem 1.25rem;}
-  .nav-links{gap:1.25rem;}
-  .nav-links a{font-size:10px;}
+  .nav-links{display:none;}
 
-  /* hero */
-  #hero{padding:5.5rem 1.25rem 3.5rem;min-height:100svh;}
-  h1.hero-title{font-size:clamp(2.4rem,11vw,4rem);line-height:1.08;}
-  .hero-sub{font-size:0.9rem;margin-top:1.5rem;}
-  .hero-domains{gap:0.6rem;margin-top:1.75rem;}
-  .domain-badge{font-size:9px;padding:0.3rem 0.7rem;}
-  .scroll-hint{right:1.25rem;bottom:1.5rem;}
+  #hero{padding:0;min-height:100svh;justify-content:center;}
+  h1.hero-name{font-size:clamp(3.2rem,13vw,5rem);}
+  .hero-sub{font-size:0.88rem;margin-bottom:2.8rem;padding:0 0.5rem;}
+  .scroll-hint{display:none;}
+  .hero-bubbles{gap:1rem;padding:0 1rem;}
+  .hbubble{width:130px;height:130px;}
+  .hbubble-num{font-size:1.8rem;}
+  .hbubble-label{font-size:9px;}
 
-  /* overlap / venn */
+  /* sections on mobile get normal padding */
+  .page-section{padding:5rem 1.25rem 3rem;}
+
+  /* research / venn */
+  .overlap-sticky{position:relative !important;height:auto !important;padding:2rem 0;min-height:auto;}
+  #overlap-engine > div:first-child{padding:3rem 1.25rem 0;}
   .overlap-scene{
-    grid-template-columns:1fr;
-    padding:0 1.25rem;
-    gap:1.75rem;
-    /* stack: text on top, venn below */
-    grid-template-rows:auto auto;
+    grid-template-columns:1fr;padding:0;gap:2rem;
   }
-  /* put text first on mobile */
-  .overlap-text-wrap{order:-1;}
-  .venn-container{
-    width:260px;height:260px;
-    margin:0 auto;
-    order:1;
-  }
-  .vcircle{width:155px;height:155px;font-size:8px;padding-top:0.85rem;}
-  .vc-urban{top:8px;left:50px;}
-  .vc-energy{bottom:8px;left:5px;}
-  .vc-ai{bottom:8px;right:5px;}
+  .overlap-text-wrap{order:-1;min-height:auto;}
+  .venn-container{width:220px;height:220px;margin:0 auto;order:1;}
+  .vcircle{width:128px;height:128px;font-size:7px;padding-top:0.7rem;}
+  .vc-urban{top:6px;left:42px;}
+  .vc-energy{bottom:6px;left:4px;}
+  .vc-ai{bottom:6px;right:4px;}
   .op-h2{font-size:clamp(1.5rem,6vw,2rem);}
   .op-p{font-size:0.875rem;}
   .op-works{gap:0.45rem;}
   .op-work-item{font-size:0.8rem;}
+  .pub-cards-zone{padding:1.5rem 1.25rem 3rem;}
+  .pub-cards-divider{margin:0 1.25rem;}
+  .pub-cloud{grid-template-columns:auto 1fr auto;}
 
-  /* publications */
-  #publications{padding:4rem 1.25rem;}
-  .pub-columns{grid-template-columns:1fr;}
-  .pub-col-body{padding:1.25rem;}
-  .pub-col-header{padding:1rem 1.25rem;}
-  .pub-title{font-size:0.95rem;}
+  /* research */
+  #publications{padding:5rem 1.25rem 3rem;}
+  #allPubs{padding:0 1.25rem 3rem !important;}
+  .pub-entry-row{grid-template-columns:1fr;gap:0.5rem;padding:1.1rem 0;}
 
   /* timeline */
-  #timeline{padding:4rem 1.25rem;}
+  #timeline{padding:5rem 1.25rem 3rem;}
   .tl-track::before{left:0;}
-  .tl-item{
-    grid-template-columns:1fr;
-    gap:0.6rem;
-    padding-left:1.75rem;
-    padding-top:1.5rem;
-    padding-bottom:1.5rem;
-  }
+  .tl-item{grid-template-columns:1fr;gap:0.6rem;padding-left:1.75rem;padding-top:1.5rem;padding-bottom:1.5rem;}
   .tl-item::before{left:-4px;top:1.8rem;}
   .tl-right h3{font-size:1.2rem;}
   .tl-right ul li{font-size:0.835rem;}
 
   /* education */
-  #education{padding:4rem 1.25rem;}
+  #education{padding:5rem 1.25rem 3rem;}
   .edu-grid{grid-template-columns:1fr;gap:1rem;margin-top:2rem;}
   .edu-card{padding:1.75rem;}
   .edu-degree{font-size:1.2rem;}
   .gpa-ghost{font-size:2.4rem;}
 
   /* contact */
-  #contact{padding:5rem 1.25rem 4rem;}
-  .contact-title{font-size:clamp(2.4rem,11vw,4rem);}
+  #contact{padding:5rem 1.25rem 3rem;}
+  .contact-title{font-size:clamp(2.2rem,10vw,3.5rem);}
   .contact-links-row{flex-direction:column;gap:0.65rem;margin-bottom:3rem;}
   .contact-pill{font-size:10px;padding:0.65rem 1.2rem;}
 
   footer{flex-direction:column;gap:0.4rem;text-align:center;padding:1.5rem 1.25rem;}
-
-  /* section labels */
   .sec-label{font-size:9px;}
 }
 </style>
@@ -307,123 +571,151 @@ footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:
   </div>
 </nav>
 
-<!-- ── HERO ── -->
+<!-- ── HERO HUB ── -->
 <section id="hero">
   <div class="hero-canvas" aria-hidden="true">
     <div class="hero-orb orb-urban"></div>
     <div class="hero-orb orb-energy"></div>
     <div class="hero-orb orb-ai"></div>
   </div>
+
   <div class="hero-content">
-    <p class="hero-eyebrow"><span></span>NUS · UPenn · Singapore</p>
-    <h1 class="hero-title">
-      <em class="grad-urban">Cities. Energy.</em><br>
-      <em class="grad-ai">Technology.</em><br>
-      And who bears the cost.
-    </h1>
-    <p class="hero-sub">I examine how political–economic institutions shape urban change through emerging technologies — and the transformations they drive in work, education, and healthcare. My research traces the environmental and social consequences of these shifts, including urban climate (in)justice and energy-intensive infrastructures.</p>
-    <div class="hero-domains">
-      <span class="domain-badge db-urban">Urban Development</span>
-      <span class="domain-badge db-energy">Energy &amp; Climate</span>
-      <span class="domain-badge db-ai">AI &amp; Labour</span>
+    <p class="hero-greeting">Hello, I'm</p>
+    <h1 class="hero-name"><em>Yiyang He</em></h1>
+    <p class="hero-sub">Interested in how political–economic institutions shape urban change through emerging technologies — and their consequences for work, education, healthcare, and climate justice.</p>
+
+    <div class="hero-bubbles">
+      <button class="hbubble hb-education" onclick="showSection('education')">
+        <span class="hbubble-inner">
+          <span class="hbubble-num">✦</span>
+          <span class="hbubble-label">Education</span>
+        </span>
+      </button>
+      <button class="hbubble hb-research" onclick="showSection('overlap-engine')">
+        <span class="hbubble-inner">
+          <span class="hbubble-num">◎</span>
+          <span class="hbubble-label">Research</span>
+        </span>
+      </button>
+      <button class="hbubble hb-experience" onclick="showSection('timeline')">
+        <span class="hbubble-inner">
+          <span class="hbubble-num">◈</span>
+          <span class="hbubble-label">Experience</span>
+        </span>
+      </button>
+      <button class="hbubble hb-contact" onclick="showSection('contact')">
+        <span class="hbubble-inner">
+          <span class="hbubble-num">◇</span>
+          <span class="hbubble-label">Contact</span>
+        </span>
+      </button>
     </div>
   </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    Scroll
-  </div>
+
 </section>
 
-<!-- ── OVERLAP ENGINE ── -->
-<section id="overlap-engine">
-  <div class="overlap-sticky" id="intSticky">
-    <div class="overlap-scene">
-
-      <!-- Venn -->
-      <div class="venn-container">
-        <div class="vcircle vc-urban" id="vc-urban">Urban &amp;<br>Grassroots</div>
-        <div class="vcircle vc-energy" id="vc-energy">Energy &amp;<br>Climate</div>
-        <div class="vcircle vc-ai" id="vc-ai">AI &amp;<br>Labour</div>
-
-        <!-- glow blobs -->
-        <div class="vblob vb-ue" id="vb-ue"></div>
-        <div class="vblob vb-ua" id="vb-ua"></div>
-        <div class="vblob vb-ea" id="vb-ea"></div>
-        <div class="vblob vb-center" id="vb-center"></div>
-
-        <!-- zone labels -->
-        <div class="venn-zone vz-ue" id="vz-ue">Climate<br>Justice</div>
-        <div class="venn-zone vz-ua" id="vz-ua">Tech &amp;<br>Place</div>
-        <div class="venn-zone vz-ea" id="vz-ea">Future<br>of Work</div>
-        <div class="venn-zone vz-center" id="vz-center">Institutions<br>&amp; Equity</div>
-      </div>
-
-      <!-- Text -->
-      <div class="overlap-text-wrap">
-
-        <!-- Phase 0: intro -->
-        <div class="overlap-phase phase-intro active" id="phase-0">
-          <div class="op-eyebrow">Research</div>
-          <h2 class="op-h2">Most of my work<br>lives in the<br>overlaps.</h2>
-          <p class="op-p">Urban development, energy and climate justice, AI and labour — these aren't separate fields to me. Scroll to see where my projects sit at their intersections.</p>
-        </div>
-
-        <!-- Phase 1: Urban alone -->
-        <div class="overlap-phase phase-urban" id="phase-1">
-          <div class="op-eyebrow" style="color:var(--urban);">Urban &amp; Grassroots</div>
-          <h2 class="op-h2">How cities are<br>made — and<br>by whom.</h2>
-          <p class="op-p">Urban development is never just technocratic planning. It is shaped by political institutions, grassroots movements, and the social histories embedded in place. I examine how these forces interact in contexts from Singapore's planned towns to caste and social inequality in global cities.</p>
-          <div class="op-works">
-            <div class="op-work-item"><strong>Urban Grassroots in the Making of Jurong Town</strong> — article in progress with A/P Daniel P. S. Goh (NUS)</div>
-            <div class="op-work-item"><strong>Global Caste Lab</strong> — researcher &amp; digital manager with Asst Prof Suraj Milind Yengde (University of Pennsylvania)</div>
-          </div>
-        </div>
-
-        <!-- Phase 2: UE intersection -->
-        <div class="overlap-phase phase-ue" id="phase-2">
-          <div class="op-eyebrow" style="color:var(--ue);">Urban × Energy — Climate Justice</div>
-          <h2 class="op-h2">Who pays for<br>the energy<br>transition?</h2>
-          <p class="op-p">Urban space and energy systems are deeply entangled. Climate transitions reshape neighbourhoods, school districts, and regional economies — often concentrating new risks on communities already underserved. I study both the politics of this unevenness and the institutional designs that could change it.</p>
-          <div class="op-works">
-            <div class="op-work-item"><strong>Climate Justice in K–12 School District Sustainability Planning</strong> — article in progress with Asst Prof Akira Drake Rodriguez (University of Pennsylvania)</div>
-            <div class="op-work-item"><strong>Just and Inclusive Energy Transitions in South and Southeast Asia</strong> — article in progress with Prof Petra Tschakert (NUS)</div>
-          </div>
-        </div>
-
-        <!-- Phase 3: UA intersection -->
-        <div class="overlap-phase phase-ua" id="phase-3">
-          <div class="op-eyebrow" style="color:var(--ua);">Urban × AI — Infrastructure &amp; Place</div>
-          <h2 class="op-h2">AI infrastructure<br>is urban<br>infrastructure.</h2>
-          <p class="op-p">Data centres, cloud systems, and AI pipelines are physical — they consume land, water, and power, and they are governed by policy choices that have real spatial consequences. I examine how US data centre policy shapes cities and communities.</p>
-          <div class="op-works">
-            <div class="op-work-item"><strong>US Data Center Policy</strong> — article in progress with Dr Vasundhara Kaul, Simon An, Asst Prof Daniel S. Schiff (Purdue)</div>
-          </div>
-        </div>
-
-        <!-- Phase 4: AI, Education & Future of Work -->
-        <div class="overlap-phase phase-ea" id="phase-4">
-          <div class="op-eyebrow" style="color:var(--ea);">AI, Education &amp; the Future of Work</div>
-          <h2 class="op-h2">How AI is<br>reshaping who<br>works, and how.</h2>
-          <p class="op-p">AI is restructuring labour markets, classrooms, and professional life — but its effects aren't neutral. I study how workers navigate precarity, how AI will reshape workforces, and how educational institutions can be redesigned to serve learners on their own terms.</p>
-          <div class="op-works">
-            <div class="op-work-item"><strong>"It's Messy…But I Feel Balanced"</strong> — published, CHI '26, with Daniel Campos Muñiz, Tse Pei Ng, Asst Prof Janghee Cho, A/P Jung-Joo Lee, Ker Wey Aw</div>
-            <div class="op-work-item"><strong>Predicting the Impacts of AI on Workers: A Systematic Literature Review</strong> — in progress with Asst Prof Luísa Nazareno (VCU), Asst Prof Daniel Schiff (Purdue), Asst Prof Zeewan Lee (LKY SPP)</div>
-            <div class="op-work-item"><strong>A Socio-Ethical Research Agenda for AI and the Future of Work</strong> — book chapter in progress with Luísa Nazareno, Vasundhara Kaul et al.</div>
-            <div class="op-work-item"><strong>Intentional Design: GenAI Integration Through the Human-AI Matrix</strong> — conference paper, HECS 2025, with Dr Verily Tan, Dr Mei Hui Liu, Dr Chun Liang Terrence Tan, A/P Yuen Jien Soo (NUS)</div>
-          </div>
-        </div>
-
-        <!-- Phase 5: placeholder kept for scroll math but empty -->
-        <div class="overlap-phase phase-all" id="phase-5" style="display:none;"></div>
-
-      </div>
-    </div>
+<!-- ── RESEARCH ── -->
+<section id="overlap-engine" class="page-section" style="padding:0;display:flex;flex-direction:column;">
+  <!-- header row: back + label — matches other pages -->
+  <div style="padding:6rem 3rem 0;flex-shrink:0;">
+    <button class="back-btn" onclick="showHome()">Home</button>
+    <div class="sec-label">Research</div>
   </div>
+  <div class="overlap-sticky" id="intSticky" style="flex:1;">
+    <div class="scene-bg" id="sceneBg">
+      <div class="scene-orb sorb-1" id="sorb1"></div>
+      <div class="scene-orb sorb-2" id="sorb2"></div>
+      <div class="scene-orb sorb-3" id="sorb3"></div>
+    </div>
+
+    <!-- vertical phase dots -->
+    <div id="phaseIndicator" style="position:absolute;left:1.5rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0.7rem;z-index:10;">
+      <span class="phase-dot active" onclick="setPhase(0)" style="cursor:pointer;" title="Overview"></span>
+      <span class="phase-dot" onclick="setPhase(1)" style="cursor:pointer;" title="Urban &amp; Grassroots"></span>
+      <span class="phase-dot" onclick="setPhase(2)" style="cursor:pointer;" title="Urban × Energy"></span>
+      <span class="phase-dot" onclick="setPhase(3)" style="cursor:pointer;" title="Energy × AI — Infrastructure"></span>
+      <span class="phase-dot" onclick="setPhase(4)" style="cursor:pointer;" title="Urban × AI — Future of Work"></span>
+      <span class="phase-dot" onclick="setPhase(5)" style="cursor:pointer;" title="AI &amp; Education"></span>
+    </div>
+
+<div class="overlap-scene">
+
+      <!-- LEFT: Venn diagram -->
+      <div class="venn-col">
+        <div class="venn-container">
+          <div class="vcircle vc-urban" id="vc-urban">Urban &amp;<br>Grassroots</div>
+          <div class="vcircle vc-energy" id="vc-energy">Energy &amp;<br>Climate</div>
+          <div class="vcircle vc-ai" id="vc-ai">
+            <span class="ai-split">
+              <span class="ai-label-main">AI &amp; Tech</span>
+            </span>
+          </div>
+          <div class="vblob vb-ue" id="vb-ue"></div>
+          <div class="vblob vb-ua" id="vb-ua"></div>
+          <div class="vblob vb-ea" id="vb-ea"></div>
+          <div class="vblob vb-center" id="vb-center"></div>
+          <div class="venn-zone vz-ue" id="vz-ue">Climate<br>Justice</div>
+          <div class="venn-zone vz-ua" id="vz-ua">Future<br>of Work</div>
+          <div class="venn-zone vz-ea" id="vz-ea">AI<br>Infrastructure</div>
+          <div class="venn-zone vz-ed" id="vz-ed">Education</div>
+          <div class="venn-zone vz-center" id="vz-center">Institutions<br>&amp; Equity</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: writeup + cards stacked -->
+      <div class="right-col">
+
+        <!-- Phase text -->
+        <div class="overlap-text-wrap">
+          <div class="overlap-phase phase-intro active" id="phase-0" style="display:flex;flex-direction:column;justify-content:center;">
+            <div class="op-eyebrow">Research</div>
+            <h2 class="op-h2">Most of my work<br>lives in the<br>overlaps.</h2>
+            <p class="op-p">Urban development, energy and climate justice, AI and labour — these aren't separate fields to me. Scroll to see where my projects sit at their intersections.</p>
+          </div>
+          <div class="overlap-phase phase-urban" id="phase-1">
+            <div class="op-eyebrow" style="color:var(--urban);">Urban &amp; Grassroots</div>
+            <h2 class="op-h2">How cities are<br>made — and<br>by whom.</h2>
+            <p class="op-p">Urban development is never just technocratic planning. It is shaped by political institutions, grassroots movements, and the social histories embedded in place. I'm drawn to how these forces interact — from Singapore's planned towns to caste and social inequality in global cities.</p>
+          </div>
+          <div class="overlap-phase phase-ue" id="phase-2">
+            <div class="op-eyebrow" style="color:var(--ue);">Urban × Energy — Climate Justice</div>
+            <h2 class="op-h2">Who pays for<br>the energy<br>transition?</h2>
+            <p class="op-p">Urban space and energy systems are deeply entangled. Climate transitions reshape neighbourhoods, school districts, and regional economies — often concentrating new risks on communities already underserved. I study both the politics of this unevenness and the institutional designs that could change it.</p>
+          </div>
+          <div class="overlap-phase phase-ea" id="phase-3">
+            <div class="op-eyebrow" style="color:var(--ea);">Energy × AI — Infrastructure &amp; Place</div>
+            <h2 class="op-h2">AI infrastructure<br>is urban<br>infrastructure.</h2>
+            <p class="op-p">Data centres, cloud systems, and AI pipelines are physical — they consume land, water, and power, and they are governed by policy choices that have real spatial consequences. I examine how US data centre policy shapes cities and communities.</p>
+          </div>
+          <div class="overlap-phase phase-ua" id="phase-4">
+            <div class="op-eyebrow" style="color:var(--ua);">Urban × AI — Future of Work</div>
+            <h2 class="op-h2">How AI is<br>reshaping who<br>works, and how.</h2>
+            <p class="op-p">AI is restructuring labour markets and professional life — but its effects aren't neutral. I study how workers navigate precarity, how AI will reshape workforces across industries, and the socio-ethical dimensions of this transformation.</p>
+          </div>
+          <div class="overlap-phase phase-ai" id="phase-5">
+            <div class="op-eyebrow" style="color:var(--ai);">AI &amp; Education</div>
+            <h2 class="op-h2">How AI is<br>redesigning the<br>classroom.</h2>
+            <p class="op-p">Generative AI is entering higher education fast — but integration without design is just disruption. I study how institutions can intentionally embed GenAI, how disciplinary perspectives shape adoption, and what this means for learners and educators.</p>
+          </div>
+        </div>
+
+        <!-- Publication cards — directly below the writeup -->
+        <div class="pub-cards-zone" id="pubCardsZone">
+          <div class="pub-cards-header" id="pubCardsHeader"></div>
+          <div class="pub-card-deck" id="pubCardDeck"></div>
+        </div>
+
+      </div><!-- end .right-col -->
+
+    </div><!-- end .overlap-scene -->
+  </div><!-- end .overlap-sticky -->
+  </div><!-- end header wrapper -->
 </section>
 
 
 <!-- ── TIMELINE ── -->
-<section id="timeline">
+<section id="timeline" class="page-section">
+  <button class="back-btn" onclick="showHome()">Home</button>
   <div class="sec-label">Experience &amp; Internships</div>
   <div class="tl-track">
 
@@ -488,7 +780,8 @@ footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:
 </section>
 
 <!-- ── EDUCATION ── -->
-<section id="education">
+<section id="education" class="page-section">
+  <button class="back-btn" onclick="showHome()">Home</button>
   <div class="sec-label">Education</div>
   <div class="edu-grid">
     <div class="edu-card">
@@ -512,8 +805,9 @@ footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:
 </section>
 
 <!-- ── CONTACT ── -->
-<section id="contact">
+<section id="contact" class="page-section">
   <div class="contact-bg" aria-hidden="true"></div>
+  <button class="back-btn" onclick="showHome()" style="position:relative;z-index:1;">Home</button>
   <div class="reveal">
     <div class="sec-label">Contact</div>
     <h2 class="contact-title">Let's think<br>together.</h2>
@@ -540,69 +834,389 @@ footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:
 <script>
 /* CURSOR */
 const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-(function animCursor(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animCursor);})();
+let mx=-200,my=-200,rx=-200,ry=-200,started=false;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  if(!started){rx=mx;ry=my;started=true;}
+});
+(function animCursor(){
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+  rx+=(mx-rx)*0.14;ry+=(my-ry)*0.14;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animCursor);
+})();
 
-/* NAV */
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+/* ── NAVIGATION ── */
+const SECTIONS=['overlap-engine','timeline','education','contact'];
 
-/* OVERLAP ENGINE */
-const phases=[
-  { id:'phase-0', blobs:[], zones:[] },
-  { id:'phase-1', blobs:[], zones:[] },
-  { id:'phase-2', blobs:['vb-ue'], zones:['vz-ue'] },
-  { id:'phase-3', blobs:['vb-ua'], zones:['vz-ua'] },
-  { id:'phase-4', blobs:['vb-ea'], zones:['vz-ea'] },
-  { id:'phase-5', blobs:['vb-ue','vb-ua','vb-ea','vb-center'], zones:['vz-ue','vz-ua','vz-ea','vz-center'] },
+function showSection(id){
+  // hide hero
+  document.getElementById('hero').style.display='none';
+  // hide all sections
+  SECTIONS.forEach(s=>{
+    const el=document.getElementById(s);
+    if(el){el.classList.remove('active');el.style.display='none';}
+  });
+  // show target
+  const target=document.getElementById(id);
+  if(target){
+    target.style.display='block';
+    // force reflow then add active for animation
+    target.offsetHeight;
+    target.classList.add('active');
+    window.scrollTo(0,0);
+    // re-run reveal observers for this section
+    target.querySelectorAll('.tl-item,.edu-card,.reveal').forEach(el=>el.classList.add('visible'));
+    // reset research phase when entering research section
+    if(id==='overlap-engine'){
+      currentPhase=-1;
+      wheelAccum=0;
+      wheelLocked=false;
+      setPhase(0);
+    }
+  }
+}
+
+function showHome(){
+  SECTIONS.forEach(s=>{
+    const el=document.getElementById(s);
+    if(el){el.classList.remove('active');el.style.display='none';}
+  });
+  const hero=document.getElementById('hero');
+  hero.style.display='flex';
+  window.scrollTo(0,0);
+}
+
+/* NAV links also use showSection */
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const href=a.getAttribute('href').replace('#','');
+    if(href==='overlap-engine'||href==='timeline'||href==='education'||href==='contact'){
+      showSection(href);
+    }
+  });
+});
+
+/* ─────────────────────────────────────────
+   RESEARCH PHASE ENGINE
+───────────────────────────────────────── */
+
+// All publications, tagged by phase
+const PUB_DATA = {
+  // Phase 1 — Urban & Grassroots
+  1: [
+    {
+      badge:'Work in Progress', badgeClass:'badge-wip', accent:'var(--urban)',
+      title:'Urban Grassroots in the Making of Jurong Town',
+      authors:'with A/P Daniel P. S. Goh (NUS)',
+      venue:'Article in progress'
+    },
+    {
+      badge:'RA & DM', badgeClass:'badge-ra', accent:'var(--urban)',
+      title:'Global Caste Lab',
+      authors:'with Asst Prof Suraj Milind Yengde (UPenn)',
+      venue:'Researcher & digital manager'
+    },
+  ],
+  // Phase 2 — Urban × Energy (Climate Justice)
+  2: [
+    {
+      badge:'Work in Progress', badgeClass:'badge-wip', accent:'var(--ue)',
+      title:'Climate Justice in K–12 School District Sustainability Planning: Durability, Equity, and Institutional Change',
+      authors:'with Asst Prof Akira Drake Rodriguez (UPenn)',
+      venue:'Article in progress'
+    },
+    {
+      badge:'Work in Progress', badgeClass:'badge-wip', accent:'var(--ue)',
+      title:'Just and Inclusive Energy Transitions in South and Southeast Asia',
+      authors:'with Prof Petra Tschakert (NUS)',
+      venue:'Article in progress'
+    },
+  ],
+  // Phase 3 — Urban × AI (Infrastructure & Place)
+  3: [
+    {
+      badge:'Work in Progress', badgeClass:'badge-wip', accent:'var(--ua)',
+      title:'US Data Center Policy',
+      authors:'with Dr Vasundhara Kaul, Simon An, Asst Prof Daniel S. Schiff (Purdue)',
+      venue:'Article in progress'
+    },
+  ],
+  // Phase 4 — AI & Future of Work
+  4: [
+    {
+      badge:"CHI '26", badgeClass:'badge-pub', accent:'var(--ea)',
+      title:'\u201cIt\u2019s Messy\u2026But I Feel Balanced\u201d: Unpacking Flexible Workers\u2019 Rhythm-Making Practices Using an Asset-Based Approach',
+      authors:'with Daniel Campos Mu\u00f1iz, Tse Pei Ng et al.',
+      venue:'CHI \u201926, Article No.\u00a0232',
+      url:'https://doi.org/10.1145/3772318.3790825'
+    },
+    {
+      badge:'Work in Progress', badgeClass:'badge-wip', accent:'var(--ea)',
+      title:'Predicting the Impacts of AI on Workers: A Systematic Literature Review',
+      authors:'with Asst Prof Lu\u00edsa Nazareno, Asst Prof D. Schiff, Asst Prof Z. Lee',
+      venue:'Article in progress'
+    },
+    {
+      badge:'Chapter', badgeClass:'badge-chapter', accent:'var(--ea)',
+      title:'A Socio-Ethical Research Agenda for AI and the Future of Work',
+      authors:'with Asst Prof Lu\u00edsa Nazareno, Dr Vasundhara Kaul et al.',
+      venue:'Book chapter in progress'
+    },
+    {
+      badge:'RA', badgeClass:'badge-ra', accent:'var(--ea)',
+      title:'The Overwork Machine: How Managers Normalise Endless Work in China\u2019s Technology Industry',
+      authors:'A/P Senhu Wang (NUS)',
+      venue:'Research assistant'
+    },
+    {
+      badge:'RA', badgeClass:'badge-ra', accent:'var(--ea)',
+      title:'Family-Friendly Workplace Practices and Fertility Intentions in Singapore',
+      authors:'A/P Senhu Wang (NUS), in collaboration with the Prime Minister\u2019s Office',
+      venue:'Research assistant'
+    },
+  ],
+  // Phase 5 — AI & Education
+  5: [
+    {
+      badge:"CHI '26", badgeClass:'badge-pub', accent:'var(--ai)',
+      title:'\u201cIt\u2019s Messy\u2026But I Feel Balanced\u201d: Unpacking Flexible Workers\u2019 Rhythm-Making Practices Using an Asset-Based Approach',
+      authors:'with Daniel Campos Mu\u00f1iz, Tse Pei Ng et al.',
+      venue:'CHI \u201926, Article No.\u00a0232',
+      url:'https://doi.org/10.1145/3772318.3790825'
+    },
+    {
+      badge:'HECS 2025', badgeClass:'badge-conf', accent:'var(--ai)',
+      title:'Intentional Design: GenAI Integration Through the Human\u2013AI Matrix',
+      authors:'with A/P Yuen Jien Soo, Dr Verily Tan et al.',
+      venue:'Paper presentation, HECS 2025, NUS',
+      url:'https://ctlt.nus.edu.sg/hecs-2025/abstracts/hecs-2025-pp-soo-et-al/'
+    },
+    {
+      badge:'GaPI 2026', badgeClass:'badge-conf', accent:'var(--ai)',
+      title:'GenAI Integration and Disciplinary Perspectives: A Study of STEM and Non-STEM Learning',
+      authors:'with Dr Verily Tan, Dr Mei Hui Liu et al.',
+      venue:'Accepted, GaPI Conference, May 2026, Hong Kong Polytechnic University'
+    },
+    {
+      badge:'RA', badgeClass:'badge-ra', accent:'var(--ai)',
+      title:'The University Disrupted: Higher Education in the Age of Artificial Intelligence',
+      authors:'with Prof Simon Chesterman, A/P Loy Hui-Chieh (NUS)',
+      venue:'Research assistant'
+    },
+    {
+      badge:'RA', badgeClass:'badge-ra', accent:'var(--ai)',
+      title:'Supporting Classroom Inquiry and Professional Development Evaluation at NUS',
+      authors:'with Dr Kiruthika Ragupathi, CTLT (NUS)',
+      venue:'Research assistant'
+    },
+  ],
+};
+
+const PHASE_LABELS = {
+  0: null,
+  1: 'Urban &amp; Grassroots — Works',
+  2: 'Urban × Energy — Climate Justice Works',
+  3: 'Energy × AI — Infrastructure &amp; Place',
+  4: 'Urban × AI — Future of Work',
+  5: 'AI &amp; Education — Works',
+};
+
+function makeCard(pub, delay) {
+  const card = document.createElement('div');
+  card.className = 'pub-cloud';
+  card.style.cssText = '--cloud-accent:'+pub.accent+';transition-delay:'+delay+'s';
+
+  // title always plain text — link only appears when expanded
+  const titleHtml = '<div class="pub-cloud-title">'+pub.title+'</div>';
+  const linkHtml = pub.url
+    ? '<a class="pub-cloud-link" href="'+pub.url+'" target="_blank">↗ Open paper</a>'
+    : '';
+
+  card.innerHTML =
+    '<span class="pub-cloud-badge '+pub.badgeClass+'">'+pub.badge+'</span>'+
+    '<div class="pub-cloud-main">'+
+      titleHtml+
+      '<div class="pub-cloud-authors">'+pub.authors+'</div>'+
+      (pub.venue ? '<div class="pub-cloud-venue">'+pub.venue+'</div>' : '')+
+      linkHtml+
+    '</div>'+
+    '<span class="pub-cloud-arrow">&#8964;</span>';
+
+  card.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') return;
+    card.classList.toggle('expanded');
+  });
+  return card;
+}
+
+function renderCards(phaseIdx) {
+  const deck = document.getElementById('pubCardDeck');
+  const header = document.getElementById('pubCardsHeader');
+  if (!deck) return;
+
+  // Fade out existing cards
+  deck.querySelectorAll('.pub-cloud').forEach(c => {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(14px) scale(0.97)';
+  });
+
+  setTimeout(() => {
+    deck.innerHTML = '';
+    const zone = document.getElementById('pubCardsZone');
+    const pubs = PUB_DATA[phaseIdx];
+    if (!pubs || phaseIdx === 0) {
+      if (header) header.innerHTML = '';
+      if (zone) zone.style.visibility = 'hidden';
+      return;
+    }
+    if (zone) zone.style.visibility = 'visible';
+    if (header) header.innerHTML = PHASE_LABELS[phaseIdx] || '';
+    pubs.forEach((pub, i) => {
+      const card = makeCard(pub, i * 0.06);
+      deck.appendChild(card);
+      // trigger visible on next frame
+      requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('visible')));
+    });
+  }, 200);
+}
+
+const phaseConfig=[
+  {
+    blobs:[],zones:[],
+    bg:['rgba(52,211,153,0.08)','rgba(251,146,60,0.08)','rgba(167,139,250,0.08)'],
+    circles:{
+      'vc-urban': {top:'8px',left:'62px',scale:1,opacity:1,spotlight:false},
+      'vc-energy':{bottom:'8px',left:'8px',scale:1,opacity:1,spotlight:false},
+      'vc-ai':    {bottom:'8px',right:'8px',scale:1,opacity:1,spotlight:false},
+    }
+  },
+  {
+    blobs:[],zones:[],
+    bg:['rgba(52,211,153,0.18)','rgba(52,211,153,0.04)','rgba(52,211,153,0.06)'],
+    circles:{
+      'vc-urban': {top:'-8px',left:'62px',scale:1.13,opacity:1,spotlight:true},
+      'vc-energy':{bottom:'16px',left:'22px',scale:0.85,opacity:0.22,spotlight:false},
+      'vc-ai':    {bottom:'16px',right:'22px',scale:0.85,opacity:0.22,spotlight:false},
+    }
+  },
+  {
+    blobs:['vb-ue'],zones:['vz-ue'],
+    bg:['rgba(245,158,11,0.15)','rgba(52,211,153,0.1)','rgba(251,146,60,0.12)'],
+    circles:{
+      'vc-urban': {top:'4px',left:'44px',scale:1.08,opacity:1,spotlight:true},
+      'vc-energy':{bottom:'0px',left:'-4px',scale:1.08,opacity:1,spotlight:true},
+      'vc-ai':    {bottom:'16px',right:'22px',scale:0.82,opacity:0.2,spotlight:false},
+    }
+  },
+  {
+    blobs:['vb-ea'],zones:['vz-ea'],
+    bg:['rgba(244,114,182,0.12)','rgba(251,146,60,0.15)','rgba(167,139,250,0.1)'],
+    circles:{
+      'vc-urban': {top:'16px',left:'62px',scale:0.82,opacity:0.2,spotlight:false},
+      'vc-energy':{bottom:'0px',left:'-4px',scale:1.13,opacity:1,spotlight:true},
+      'vc-ai':    {bottom:'-4px',right:'8px',scale:1.13,opacity:1,spotlight:true},
+    }
+  },
+  {
+    blobs:['vb-ua'],zones:['vz-ua'],
+    bg:['rgba(96,165,250,0.18)','rgba(52,211,153,0.06)','rgba(167,139,250,0.1)'],
+    circles:{
+      'vc-urban': {top:'-8px',left:'62px',scale:1.13,opacity:1,spotlight:true},
+      'vc-energy':{bottom:'16px',left:'22px',scale:0.82,opacity:0.2,spotlight:false},
+      'vc-ai':    {bottom:'-4px',right:'8px',scale:1.13,opacity:1,spotlight:true},
+    }
+  },
+  {
+    blobs:[],zones:['vz-ed'],
+    bg:['rgba(167,139,250,0.05)','rgba(96,165,250,0.05)','rgba(167,139,250,0.18)'],
+    circles:{
+      'vc-urban': {top:'16px',left:'62px',scale:0.82,opacity:0.2,spotlight:false},
+      'vc-energy':{bottom:'16px',left:'22px',scale:0.82,opacity:0.2,spotlight:false},
+      'vc-ai':    {bottom:'-4px',right:'8px',scale:1.2,opacity:1,spotlight:true},
+    }
+  },
 ];
 
 const allBlobs=['vb-ue','vb-ua','vb-ea','vb-center'];
-const allZones=['vz-ue','vz-ua','vz-ea','vz-center'];
-const allCircles=['vc-urban','vc-energy','vc-ai'];
+const allZones=['vz-ue','vz-ua','vz-ea','vz-ed','vz-center'];
+const s1=document.getElementById('sorb1'),s2=document.getElementById('sorb2'),s3=document.getElementById('sorb3');
 
 let currentPhase=-1;
 function setPhase(idx){
-  if(idx===currentPhase)return;
+  if(idx===currentPhase||idx>=phaseConfig.length)return;
   currentPhase=idx;
-  const p=phases[idx];
-  // phases
-  phases.forEach((ph,i)=>{
-    const el=document.getElementById(ph.id);
-    if(el)el.classList.toggle('active',i===idx);
-  });
-  // blobs
-  allBlobs.forEach(b=>{
-    const el=document.getElementById(b);
-    if(el)el.classList.toggle('lit',p.blobs.includes(b));
-  });
-  // zones
-  allZones.forEach(z=>{
-    const el=document.getElementById(z);
-    if(el)el.classList.toggle('lit',p.zones.includes(z));
-  });
-  // circles: dim non-active on specific phases
-  allCircles.forEach(c=>{
-    const el=document.getElementById(c);
+  const p=phaseConfig[idx];
+
+  document.querySelectorAll('.overlap-phase').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  document.querySelectorAll('.phase-dot').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  // dim Work or Ed label in the AI circle
+  document.body.classList.toggle('phase-work-active', idx===4);
+  document.body.classList.toggle('phase-ed-active', idx===5);
+
+  allBlobs.forEach(b=>{const el=document.getElementById(b);if(el)el.classList.toggle('lit',p.blobs.includes(b));});
+  allZones.forEach(z=>{const el=document.getElementById(z);if(el)el.classList.toggle('lit',p.zones.includes(z)||z==='vz-center');});
+
+  const bgC=p.bg;
+  if(s1){s1.style.background=bgC[0];s1.classList.add('lit');}
+  if(s2){s2.style.background=bgC[1];s2.classList.add('lit');}
+  if(s3){s3.style.background=bgC[2];s3.classList.add('lit');}
+
+  Object.entries(p.circles).forEach(([id,cfg])=>{
+    const el=document.getElementById(id);
     if(!el)return;
-    if(idx===1){el.style.opacity=c==='vc-urban'?'1':'0.25';}
-    else if(idx===2){el.style.opacity=(c==='vc-urban'||c==='vc-energy')?'0.8':'0.25';}
-    else if(idx===3){el.style.opacity=(c==='vc-urban'||c==='vc-ai')?'0.8':'0.25';}
-    else if(idx===4){el.style.opacity=(c==='vc-energy'||c==='vc-ai')?'0.8':'0.25';}
-    else{el.style.opacity='1';}
+    el.style.opacity=cfg.opacity;
+    el.style.transform='scale('+cfg.scale+')';
+    el.style.top='';el.style.bottom='';el.style.left='';el.style.right='';
+    if(cfg.top!==undefined)el.style.top=cfg.top;
+    if(cfg.bottom!==undefined)el.style.bottom=cfg.bottom;
+    if(cfg.left!==undefined)el.style.left=cfg.left;
+    if(cfg.right!==undefined)el.style.right=cfg.right;
+    el.classList.toggle('spotlight',cfg.spotlight);
   });
+
+  renderCards(idx);
 }
 setPhase(0);
 
-const overlapSec=document.getElementById('overlap-engine');
-window.addEventListener('scroll',()=>{
-  const rect=overlapSec.getBoundingClientRect();
-  const total=overlapSec.offsetHeight-window.innerHeight;
-  const scrolled=-rect.top;
-  if(scrolled<0||scrolled>total)return;
-  const idx=Math.min(4,Math.floor((scrolled/total)*5));
-  setPhase(idx);
-},{passive:true});
+// Wheel-driven phase stepping — one gesture = one phase, hard stop between
+let wheelLocked = false;
+let wheelAccum = 0;
+const WHEEL_THRESHOLD = 120; // low threshold but gated by a long lock
+const LOCK_MS = 900;         // 900ms between any phase changes = feels deliberate
+
+window.addEventListener('wheel', (e) => {
+  const sec = document.getElementById('overlap-engine');
+  if (!sec || sec.style.display === 'none') return;
+  e.preventDefault();
+
+  if (wheelLocked) {
+    wheelAccum = 0; // discard all input during lock — prevents queuing
+    return;
+  }
+
+  wheelAccum += e.deltaY;
+
+  if (wheelAccum > WHEEL_THRESHOLD) {
+    wheelAccum = 0;
+    if (currentPhase < phaseConfig.length - 1) {
+      wheelLocked = true;
+      setTimeout(() => { wheelLocked = false; wheelAccum = 0; }, LOCK_MS);
+      setPhase(currentPhase + 1);
+    }
+    // at last phase: do nothing, don't go anywhere
+  } else if (wheelAccum < -WHEEL_THRESHOLD) {
+    wheelAccum = 0;
+    if (currentPhase > 0) {
+      wheelLocked = true;
+      setTimeout(() => { wheelLocked = false; wheelAccum = 0; }, LOCK_MS);
+      setPhase(currentPhase - 1);
+    } else {
+      showHome();
+    }
+  }
+}, { passive: false });
 
 /* SCROLL REVEAL */
 const io=new IntersectionObserver(entries=>entries.forEach(e=>{
